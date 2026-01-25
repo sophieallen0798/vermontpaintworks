@@ -21,22 +21,22 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 
-    /* Typography */
+    /* Typography - Mobile First */
     --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --font-size-base: 16px;
     --line-height-base: 1.6;
 
-    /* Spacing */
+    /* Spacing - Mobile First */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
 
     /* Layout */
     --max-width: 1200px;
-    --header-height: 80px;
+    --header-height: 70px;
 }
 
 html {
@@ -69,7 +69,7 @@ a:hover {
     color: var(--primary-dark);
 }
 
-/* TYPOGRAPHY */
+/* TYPOGRAPHY - MOBILE FIRST */
 h1,
 h2,
 h3,
@@ -83,12 +83,12 @@ h6 {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     margin-bottom: var(--spacing-md);
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
 }
 
 h3 {
@@ -108,10 +108,10 @@ p {
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-sm);
 }
 
-/* HEADER & NAVIGATION */
+/* HEADER & NAVIGATION - MOBILE FIRST */
 .site-header {
     background-color: var(--bg-color);
     box-shadow: var(--shadow);
@@ -130,7 +130,6 @@ p {
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    /* keep header items on a single line and let spacing compress */
     flex-wrap: nowrap;
     gap: var(--spacing-sm);
 }
@@ -144,11 +143,10 @@ p {
 }
 
 .logo a {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--primary-color);
     text-decoration: none;
-    /* allow the site name to wrap but clamp at 2 lines */
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -161,28 +159,44 @@ p {
     color: var(--primary-dark);
 }
 
-/* Constrain the actual img inside the logo container so it fits the header */
 .logo img {
     display: block;
     height: auto;
-    max-height: 60px;
+    max-height: 50px;
     width: auto;
     max-width: 100%;
 }
 
 .nav-links {
-    display: flex;
+    display: none;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color);
+    flex-direction: column;
+    gap: 0;
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-md) 0;
     list-style: none;
-    gap: clamp(0px, 3vw, 2.5rem);
-    align-items: center;
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+.nav-links li {
+    width: 100%;
 }
 
 .nav-links a {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    width: 100%;
     color: var(--text-color);
     font-weight: 500;
     white-space: nowrap;
     text-decoration: none;
-    padding: 1px;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -194,7 +208,7 @@ p {
 }
 
 .mobile-menu-toggle {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 4px;
     background: none;
@@ -211,9 +225,7 @@ p {
     transition: all 0.3s ease;
 }
 
-/* ===========================
-   HERO SECTION
-   =========================== */
+/* HERO SECTION - MOBILE FIRST */
 .hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     color: white;
@@ -223,12 +235,12 @@ p {
 
 .hero h1 {
     color: white;
-    font-size: 3rem;
+    font-size: 1.75rem;
     margin-bottom: var(--spacing-md);
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     margin-bottom: var(--spacing-lg);
     opacity: 0.95;
 }
@@ -250,7 +262,7 @@ p {
     color: var(--text-light);
 }
 
-/* BUTTONS*/
+/* BUTTONS */
 .cta-button,
 .submit-button {
     display: inline-block;
@@ -302,19 +314,17 @@ p {
     margin-bottom: var(--spacing-xl);
 }
 
-/* Features Grid */
+/* GALLERY GRID - MOBILE FIRST */
 .gallery-grid {
-    column-count: 3;
-    column-gap: var(--spacing-md);
+    column-count: 2;
+    column-gap: var(--spacing-sm);
 }
 
 .gallery-item {
     display: inline-block;
-    /* allow items to flow into columns */
     width: 100%;
     margin: 0 0 var(--spacing-md);
     background: var(--bg-white);
-    /* border-radius: 6px; */
     overflow: hidden;
     text-align: center;
     break-inside: avoid;
@@ -323,23 +333,14 @@ p {
 .gallery-item img {
     width: 100%;
     height: auto;
-    /* preserve natural aspect ratio */
     max-width: 100%;
     display: block;
 }
 
-/* Responsive column counts */
-@media (max-width: 1024px) {
-    .gallery-grid {
-        column-count: 2;
-    }
-}
-
-/* Content Grid */
+/* CONTENT GRID - MOBILE FIRST */
 .content-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
 }
 
@@ -361,23 +362,17 @@ p {
 .about-section-image {
     width: 100%;
     max-width: 300px;
-    /* set desired max width */
     height: auto;
-    /* maintain aspect ratio */
     display: block;
-    /* allow centering */
     margin: 0 auto;
-    /* center the image */
     border-radius: 8px;
     box-shadow: var(--shadow-md);
 }
 
-/* Figure and caption for about images */
 .about-figure {
     margin: 0;
     display: block;
     position: relative;
-    /* allow overlay positioning */
     width: 100%;
 }
 
@@ -395,7 +390,6 @@ p {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-/* Slightly elevate caption on image hover for emphasis */
 .about-figure:hover .about-caption {
     transform: translateY(-2px);
     transition: transform 160ms ease;
@@ -419,10 +413,10 @@ p {
     border-bottom: none;
 }
 
-/* Services Grid */
+/* SERVICES GRID - MOBILE FIRST */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-lg);
 }
 
@@ -468,7 +462,7 @@ p {
     font-weight: bold;
 }
 
-/* Portfolio */
+/* PORTFOLIO - MOBILE FIRST */
 .portfolio-intro {
     text-align: center;
     max-width: 800px;
@@ -477,7 +471,7 @@ p {
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 2rem;
     padding: 2rem;
 }
@@ -515,27 +509,20 @@ p {
     color: var(--primary-color);
 }
 
-/* Portfolio Categories & Carousels */
 .portfolio-category {
     margin-bottom: var(--spacing-2xl);
 }
 
-/* Gallery grid for gallery.html - Pinterest-style masonry layout */
+/* GALLERY SECTION - MOBILE FIRST */
 .gallery-section {
     padding: var(--spacing-2xl) 0;
 }
 
-/* Gallery Index Navigation */
 .gallery-index {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
-    /* margin-bottom: var(--spacing-2xl);
-    padding: var(--spacing-md); */
-    /* background: var(--bg-light); */
-    /* border-radius: 8px;
-    border: 1px solid var(--border-color); */
 }
 
 .gallery-index-link {
@@ -548,6 +535,7 @@ p {
     font-size: 0.95rem;
     text-decoration: none;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .gallery-index-link:hover {
@@ -555,21 +543,6 @@ p {
     color: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-}
-
-@media (max-width: 600px) {
-    .gallery-index {
-        flex-direction: column;
-    }
-
-    .gallery-index-link {
-        text-align: center;
-    }
-
-    .gallery-grid {
-        column-count: 1;
-    }
-
 }
 
 .gallery-category {
@@ -582,7 +555,7 @@ p {
     margin-bottom: var(--spacing-xl);
     padding-bottom: var(--spacing-sm);
     color: var(--primary-color);
-    font-size: 2.00rem;
+    font-size: 2rem;
     font-weight: 700;
     position: relative;
 }
@@ -591,41 +564,13 @@ p {
     margin-bottom: var(--spacing-xl);
 }
 
-.gallery-grid {
-    /* CSS columns create a masonry effect */
-    column-count: 3;
-    column-gap: var(--spacing-md);
-}
-
-.gallery-item {
-    display: inline-block;
-    width: 100%;
-    margin: 0 0 var(--spacing-md) 0;
-    background: var(--bg-white);
-    /* border-radius: 8px; */
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    break-inside: avoid;
-    page-break-inside: avoid;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
 .gallery-item:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
     cursor: pointer;
 }
 
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    vertical-align: bottom;
-}
-
-
-
-/* Lightbox Modal */
+/* LIGHTBOX MODAL */
 .lightbox-modal {
     display: none;
     position: fixed;
@@ -663,8 +608,8 @@ p {
 
 .lightbox-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     width: 40px;
     height: 40px;
     background: rgba(255, 255, 255, 0.9);
@@ -690,14 +635,14 @@ p {
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
     color: var(--text-color);
     transition: background 0.2s ease;
     z-index: 10001;
@@ -708,11 +653,11 @@ p {
 }
 
 .lightbox-nav.prev {
-    left: 20px;
+    left: 10px;
 }
 
 .lightbox-nav.next {
-    right: 20px;
+    right: 10px;
 }
 
 .lightbox-caption {
@@ -731,6 +676,7 @@ p {
 
 
 
+/* CAROUSEL - MOBILE FIRST */
 .portfolio-category h3 {
     text-align: center;
     margin-bottom: var(--spacing-xl);
@@ -740,14 +686,13 @@ p {
 
 .carousel-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(350px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
 }
 
 .carousel-item,
 .before-after-item {
     background-color: #fffcf7;
-    /* border: 2px solid var(--text-color); */
     border-radius: 6px;
     padding: 10px;
     box-shadow: var(--shadow-sm);
@@ -767,7 +712,6 @@ p {
     text-align: center;
 }
 
-/* Carousel Component */
 .carousel {
     position: relative;
     width: 100%;
@@ -779,10 +723,8 @@ p {
 .carousel-wrapper {
     position: relative;
     width: 100%;
-    /* default visual frame for the carousel - consistent layout */
     aspect-ratio: 3 / 4;
     min-height: 280px;
-    /* graceful fallback for older browsers */
     background-color: var(--bg-dark);
 }
 
@@ -801,11 +743,10 @@ p {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
-    /* center image content so varied aspect ratios look balanced */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* padding: 12px; */
+    background-color: var(--bg-light);
 }
 
 .carousel-slide.active {
@@ -813,9 +754,6 @@ p {
     pointer-events: auto;
 }
 
-/* Preserve original image aspect ratio while fitting inside the carousel frame.
-   Use letterboxing (background shows) rather than cropping.
-*/
 .carousel-slide img {
     max-width: 100%;
     max-height: 100%;
@@ -824,9 +762,10 @@ p {
     object-fit: contain;
     display: block;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
-/* Per-slide label for before/after photos */
 .slide-photo-label {
     position: absolute;
     top: 10px;
@@ -837,35 +776,7 @@ p {
     border-radius: 4px;
     font-weight: 600;
     font-size: 0.875rem;
-    z-index: 20;
-}
-
-/* Ensure labels sit above the image and are visible in all browsers */
-.carousel-slide img {
-    position: relative;
-    z-index: 1;
-}
-
-.slide-photo-label {
     z-index: 999;
-}
-
-/* Subtle neutral background so letterboxed areas look intentional */
-.carousel .carousel-slide {
-    background-color: var(--bg-light);
-}
-
-/* Before/After images should also preserve original aspect ratio */
-.before-after-section img,
-.before-after-section picture,
-.before-after-section video {
-    max-width: 100%;
-    max-height: 60vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
 }
 
 .carousel-btn {
@@ -875,8 +786,8 @@ p {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -891,11 +802,11 @@ p {
 }
 
 .carousel-btn-prev {
-    left: 10px;
+    left: 5px;
 }
 
 .carousel-btn-next {
-    right: 10px;
+    right: 5px;
 }
 
 .carousel-indicators {
@@ -927,16 +838,6 @@ p {
     background-color: white;
 }
 
-.before-after-comparison {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
-}
-
-.before-after-section {
-    position: relative;
-}
-
 .before-after-label {
     position: absolute;
     top: 10px;
@@ -950,10 +851,10 @@ p {
     z-index: 20;
 }
 
-/* Contact Section */
+/* CONTACT - MOBILE FIRST */
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
 }
 
@@ -989,7 +890,7 @@ p {
     color: var(--primary-color);
 }
 
-/* Forms */
+/* FORMS */
 .contact-form {
     background-color: var(--bg-light);
     padding: var(--spacing-lg);
@@ -1032,7 +933,7 @@ p {
     color: var(--text-light);
 }
 
-/* CTA Section */
+/* CTA SECTION */
 .cta-section {
     background-color: var(--bg-light);
     padding: var(--spacing-2xl) 0;
@@ -1068,7 +969,7 @@ p {
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-lg);
 }
@@ -1120,48 +1021,14 @@ p {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* RESPONSIVE DESIGN */
-/* Tablet: use mobile hamburger menu for widths between 769px and 1024px */
-/* @media (min-width: 769px) and (max-width: 1024px) {
+/* ============================================
+   TABLET BREAKPOINT - min-width: 768px
+   ============================================ */
+@media (min-width: 768px) {
     :root {
-        --header-height: 75px;
-    }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: var(--header-height);
-        left: 0;
-        right: 0;
-        background-color: var(--bg-color);
-        flex-direction: column;
-        gap: 0;
-        box-shadow: var(--shadow-md);
-        padding: var(--spacing-md) 0;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .nav-links li {
-        width: 100%;
-    }
-
-    .nav-links a {
-        display: block;
-        padding: var(--spacing-sm) var(--spacing-md);
-        width: 100%;
-    }
-
-    .mobile-menu-toggle {
-        display: flex;
-    }
-} */
-
-@media (max-width: 768px) {
-    :root {
-        --header-height: 70px;
+        --header-height: 80px;
+        --spacing-xl: 3rem;
+        --spacing-2xl: 4rem;
     }
 
     h1 {
@@ -1169,7 +1036,43 @@ p {
     }
 
     h2 {
-        font-size: 1.75rem;
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    /* Navigation becomes horizontal on tablet */
+    .nav-links {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        gap: clamp(1px, 1vw, 2px);
+        align-items: center;
+        box-shadow: none;
+        padding: 2vw;
+        background-color: transparent;
+    }
+
+    .nav-links li {
+        width: auto;
+    }
+
+    .nav-links a {
+        padding: 10px;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    .logo a {
+        font-size: 1.5rem;
+    }
+
+    .logo img {
+        max-height: 60px;
     }
 
     .hero h1 {
@@ -1177,113 +1080,89 @@ p {
     }
 
     .hero-subtitle {
-        font-size: 1.125rem;
+        font-size: 1.25rem;
     }
 
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: var(--header-height);
-        left: 0;
-        right: 0;
-        background-color: var(--bg-color);
-        flex-direction: column;
-        gap: 0;
-        box-shadow: var(--shadow-md);
-        padding: var(--spacing-md) 0;
+    /* Gallery and grids expand to multiple columns */
+    .gallery-grid {
+        column-count: 3;
+        column-gap: var(--spacing-md);
     }
 
-    .nav-links.active {
-        display: flex;
+    .content-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
     }
 
-    .nav-links li {
-        width: 100%;
-    }
-
-    .nav-links a {
-        display: block;
-        padding: var(--spacing-sm) var(--spacing-md);
-        width: 100%;
-    }
-
-    .mobile-menu-toggle {
-        display: flex;
-    }
-
-    .features-grid,
     .services-grid,
     .portfolio-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
-    .content-grid,
     .contact-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
     .carousel-container {
-        grid-template-columns: 1fr;
-    }
-
-    .before-after-comparison {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(350px, 1fr));
     }
 
     .carousel-btn {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
 
     .carousel-btn-prev {
-        left: 5px;
-    }
-
-    .carousel-btn-next {
-        right: 5px;
-    }
-
-    .lightbox-close {
-        top: 10px;
-        right: 10px;
-    }
-
-    .lightbox-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .lightbox-nav.prev {
         left: 10px;
     }
 
-    .lightbox-nav.next {
+    .carousel-btn-next {
         right: 10px;
     }
 
+    .lightbox-close {
+        top: 20px;
+        right: 20px;
+    }
+
+    .lightbox-nav {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+
+    .lightbox-nav.prev {
+        left: 20px;
+    }
+
+    .lightbox-nav.next {
+        right: 20px;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 
-@media (max-width: 480px) {
-    :root {
-        --spacing-xl: 2rem;
-        --spacing-2xl: 3rem;
-    }
-
-    .container {
-        padding: 0 var(--spacing-sm);
-    }
-
+/* ============================================
+   DESKTOP BREAKPOINT - min-width: 1024px
+   ============================================ */
+@media (min-width: 1024px) {
     h1 {
-        font-size: 1.75rem;
+        font-size: 2.5rem;
     }
 
     .hero h1 {
-        font-size: 1.75rem;
+        font-size: 3rem;
+    }
+
+    .carousel-container {
+        grid-template-columns: repeat(3, minmax(350px, 1fr));
     }
 }
 
-/* ACCESSIBILITY */
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
 
     *,
