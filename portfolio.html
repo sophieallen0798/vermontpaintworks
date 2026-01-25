@@ -11,21 +11,21 @@
     <meta name="theme-color" content="#1a5438">
 
     <meta property="og:title" content="Portfolio - Vermont Paint Works">
-    <meta property="og:description" content="View our completed painting projects">
+    <meta property="og:description" content="View our completed projects">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.vermontpaintworks.com/portfolio.html">
     <meta property="og:site_name" content="Vermont Paint Works">
     <meta property="og:image" content="https://www.vermontpaintworks.com/assets/images/tiny-house/tiny-house-front.jpg">
-    <meta property="og:image:alt" content="Freshly painted tiny home exterior in Vermont">
+    <meta property="og:image:alt" content="Newly built tiny home in Vermont">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="800">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Portfolio - Vermont Paint Works">
-    <meta name="twitter:description" content="View our completed painting projects">
+    <meta name="twitter:description" content="View our completed projects">
     <meta name="twitter:image"
         content="https://www.vermontpaintworks.com/assets/images/tiny-house/tiny-house-front.jpg">
-    <meta name="twitter:image:alt" content="Freshly painted tiny home exterior in Vermont">
+    <meta name="twitter:image:alt" content="Newly built tiny home in Vermont">
 
     <title>Portfolio - Vermont Paint Works</title>
 
@@ -44,29 +44,19 @@
     <main>
         <section class="page-header">
             <div class="container">
-                <h1>Portfolio of Recent Projects</h1>
-                <p>View our portfolio of completed projects to see if we're the right fit for you.</p>
+                <h1>Portfolio</h1>
+                <p>View our recent projects below. </p>
             </div>
         </section>
 
         <section class="portfolio-section">
             <div class="container">
-                <!-- <div class="portfolio-intro">
-                    <h2>Recent Projects</h2>
-                    <p>We take pride in every project we complete. Below are examples of our recent work throughout
-                        Vermont, showcasing our attention to detail and commitment to excellence.</p>
-                </div> -->
-
-                <!-- Finished Projects Section -->
                 <div class="portfolio-category">
-                    <!-- <h3>Completed Projects</h3> -->
-                    <div id="finished-carousels" class="carousel-container"></div>
+                    <div id="before-after-container" class="carousel-container"></div>
                 </div>
-
-                <!-- Before & After Section -->
+                <h3>Art</h3>
                 <div class="portfolio-category">
-                    <!-- <h3>Before & After Transformations</h3> -->
-                    <div id="before-after-container" class="before-after-container"></div>
+                    <div id="art-container" class="carousel-container"></div>
                 </div>
             </div>
         </section>
@@ -85,7 +75,49 @@
     <script>
         // Portfolio data configuration
         window.portfolioData = {
-            finishedSets: [
+            streetArtSets: [
+                {
+                    title: 'Chalk Art',
+                    dir: 'street-art',
+                    images: [
+                        'chalk-seahorse.jpg',
+                        'chalk-woman.jpg',
+                        'seahorses.jpg'
+                    ]
+                }
+            ],
+            beforeAfterSets: [
+                {
+                    title: 'Exterior House Painting',
+                    dir: 'colorful-house',
+                    before: [
+                        'colorful-before-side.jpg',
+                        'colorful-porch-before.jpg',
+                        'colorful-round-before.jpg',
+                    ],
+                    after: [
+                        'colorful-full-after.jpg',
+                        'colorful-after-front.jpg',
+                        'colorful-after-angle.jpg',
+                        'colorful-after-curve.jpg',
+                        'colorful-after-side.jpg',
+                        'colorful-porch-after.jpg',
+                        'colorful-porch-after2.jpg'
+                    ]
+                },
+                {
+                    title: 'Porch Restoration',
+                    dir: 'porch',
+                    before: [
+                        'porch-before-during.jpg',
+                        'porch-before-during-2.jpg',
+                        'porch-before-side.jpg'
+                    ],
+                    after: [
+                        'porch-after.jpg',
+                        'porch-after-1.jpg'
+                    ]
+                },
                 {
                     title: 'Tiny House Build',
                     dir: 'tiny-house',
@@ -109,38 +141,6 @@
                     images: [
                         'stairs.jpg',
                         'stairs-with-tread.jpg'
-                    ]
-                }
-            ],
-            beforeAfterSets: [
-                {
-                    title: 'Exterior House Painting',
-                    dir: 'colorful-house',
-                    before: [
-                        'colorful-before-side.jpg',
-                        'colorful-porch-before.jpg'
-                    ],
-                    after: [
-                        'colorful-full-after.jpg',
-                        'colorful-after-front.jpg',
-                        'colorful-after-angle.jpg',
-                        'colorful-after-curve.jpg',
-                        'colorful-after-side.jpg',
-                        'colorful-porch-after.jpg',
-                        'colorful-porch-after2.jpg'
-                    ]
-                },
-                {
-                    title: 'Porch Restoration',
-                    dir: 'porch',
-                    before: [
-                        'porch-before-during.jpg',
-                        'porch-before-during-2.jpg',
-                        'porch-before-side.jpg'
-                    ],
-                    after: [
-                        'porch-after.jpg',
-                        'porch-after-1.jpg'
                     ]
                 }
             ]

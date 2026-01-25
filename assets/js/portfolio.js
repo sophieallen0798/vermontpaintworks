@@ -30,11 +30,16 @@ class Carousel {
         this.container.innerHTML = `
             <div class="carousel-wrapper">
                 <div class="carousel-slides">
-                    ${this.images.map((img, index) => `
+                    ${this.images.map((img, index) => {
+                        const src = (typeof img === 'string') ? img : img.src;
+                        const label = (typeof img === 'string') ? '' : img.label || '';
+                        const alt = `Project image ${index + 1}${label ? ' - ' + label : ''}`;
+                        return `
                         <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
-                            <img src="${img}" alt="Project image ${index + 1}" loading="lazy">
+                            <img src="${src}" alt="${alt}" loading="lazy">
+                            ${label ? `<span class="slide-photo-label">${label}</span>` : ''}
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
                 ${this.images.length > 1 ? `
                     <button class="carousel-btn carousel-btn-prev" aria-label="Previous image">
@@ -121,81 +126,34 @@ class Carousel {
     }
 }
 
-/**
- * Create a single carousel item
- */
-function createCarouselItem(data, basePath) {
+function createBeforeAfterItem(data, basePath) {
     const item = document.createElement('div');
-    item.className = 'carousel-item';
-    
+    item.className = 'before-after-item';
+
     const title = document.createElement('h4');
     title.textContent = data.title;
     item.appendChild(title);
 
+    // Combined carousel containing both before and after slides with labels
     const carouselContainer = document.createElement('div');
     carouselContainer.className = 'carousel';
     item.appendChild(carouselContainer);
 
-    const images = data.images.map(img => `${basePath}${data.dir}/${img}`);
-    new Carousel(carouselContainer, images);
+    const combined = [];
+    if (Array.isArray(data.before)) {
+        data.before.forEach(img => combined.push({ src: `${basePath}${data.dir}/${img}`, label: 'Before' }));
+    }
+    if (Array.isArray(data.after)) {
+        data.after.forEach(img => combined.push({ src: `${basePath}${data.dir}/${img}`, label: 'After' }));
+    }
+    if (Array.isArray(data.images)) {
+        data.images.map(img => combined.push({ src: `${basePath}${data.dir}/${img}` }));
+    }
+    new Carousel(carouselContainer, combined);
 
     return item;
 }
 
-/**
- * Create a before/after comparison item with two carousels
- */
-function createBeforeAfterItem(data, basePath) {
-    const item = document.createElement('div');
-    item.className = 'before-after-item';
-    
-    const title = document.createElement('h4');
-    title.textContent = data.title;
-    item.appendChild(title);
-
-    const comparison = document.createElement('div');
-    comparison.className = 'before-after-comparison';
-
-    // Before carousel
-    const beforeSection = document.createElement('div');
-    beforeSection.className = 'before-after-section';
-    const beforeLabel = document.createElement('span');
-    beforeLabel.className = 'before-after-label';
-    beforeLabel.textContent = 'Before';
-    beforeSection.appendChild(beforeLabel);
-    
-    const beforeCarousel = document.createElement('div');
-    beforeCarousel.className = 'carousel';
-    beforeSection.appendChild(beforeCarousel);
-    
-    const beforeImages = data.before.map(img => `${basePath}${data.dir}/${img}`);
-    new Carousel(beforeCarousel, beforeImages);
-
-    // After carousel
-    const afterSection = document.createElement('div');
-    afterSection.className = 'before-after-section';
-    const afterLabel = document.createElement('span');
-    afterLabel.className = 'before-after-label';
-    afterLabel.textContent = 'After';
-    afterSection.appendChild(afterLabel);
-    
-    const afterCarousel = document.createElement('div');
-    afterCarousel.className = 'carousel';
-    afterSection.appendChild(afterCarousel);
-    
-    const afterImages = data.after.map(img => `${basePath}${data.dir}/${img}`);
-    new Carousel(afterCarousel, afterImages);
-
-    comparison.appendChild(beforeSection);
-    comparison.appendChild(afterSection);
-    item.appendChild(comparison);
-
-    return item;
-}
-
-/**
- * Initialize portfolio carousels
- */
 function initPortfolio() {
     if (!window.portfolioData) {
         console.error('Portfolio data not found');
@@ -203,23 +161,20 @@ function initPortfolio() {
     }
 
     const basePath = '/assets/images/';
-    const { finishedSets, beforeAfterSets } = window.portfolioData;
+    const { streetArtSets, beforeAfterSets } = window.portfolioData;
 
-    // Render finished project carousels
-    const finishedContainer = document.getElementById('finished-carousels');
-    if (finishedContainer && finishedSets) {
-        finishedSets.forEach(set => {
-            const item = createCarouselItem(set, basePath);
-            finishedContainer.appendChild(item);
-        });
-    }
-
-    // Render before/after comparison carousels
     const beforeAfterContainer = document.getElementById('before-after-container');
     if (beforeAfterContainer && beforeAfterSets) {
         beforeAfterSets.forEach(set => {
             const item = createBeforeAfterItem(set, basePath);
             beforeAfterContainer.appendChild(item);
+        });
+    }
+    const artContainer = document.getElementById('art-container');
+    if (artContainer && streetArtSets) {
+        streetArtSets.forEach(set => {
+            const item = createBeforeAfterItem(set, basePath);
+            artContainer.appendChild(item);
         });
     }
 }
