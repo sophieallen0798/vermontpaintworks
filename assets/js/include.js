@@ -1,11 +1,34 @@
-async function includeHTML(selector, file) {
-  const element = document.querySelector(selector);
-  if (!element) return;
+document.addEventListener('DOMContentLoaded', function() {
+    const includeElements = document.querySelectorAll('[data-include]');
 
-  const response = await fetch(file);
-  element.innerHTML = await response.text();
-}
+    if (!includeElements.length) {
+        if (window.initNavigation) {
+            window.initNavigation();
+        }
+        return;
+    }
 
-// Load shared components
-includeHTML("#header", "/partials/header.html");
-includeHTML("#footer", "/partials/footer.html");
+    const requests = Array.from(includeElements).map((element) => {
+        const filePath = element.getAttribute('data-include');
+
+        return fetch(filePath)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${filePath}`);
+                }
+                return response.text();
+            })
+            .then((html) => {
+                element.innerHTML = html;
+            })
+            .catch(() => {
+                element.innerHTML = '';
+            });
+    });
+
+    Promise.all(requests).then(() => {
+        if (window.initNavigation) {
+            window.initNavigation();
+        }
+    });
+});

@@ -1,0 +1,16 @@
+{
+  "name": "Vermont Paint Works",
+  "short_name": "Vermont Paint",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a5438",
+  "icons": [
+    {
+      "src": "/assets/images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

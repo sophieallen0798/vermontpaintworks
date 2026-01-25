@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Vermont Paint Works for a free quote. Call, email, or fill out our contact form to discuss your painting project.">
+    <meta name="keywords" content="contact Vermont Paint Works, painting quote Vermont, free estimate painting">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1a5438">
+    
+    <meta property="og:title" content="Contact Us - Vermont Paint Works">
+    <meta property="og:description" content="Get in touch for a free quote on your painting project">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.vermontpaintworks.com/contact.html">
+    <meta property="og:site_name" content="Vermont Paint Works">
+    <meta property="og:image" content="https://www.vermontpaintworks.com/assets/images/colorful-house/colorful-after-side.jpg">
+    <meta property="og:image:alt" content="Freshly painted Vermont home">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="800">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us - Vermont Paint Works">
+    <meta name="twitter:description" content="Get in touch for a free quote on your painting project">
+    <meta name="twitter:image" content="https://www.vermontpaintworks.com/assets/images/colorful-house/colorful-after-side.jpg">
+    <meta name="twitter:image:alt" content="Freshly painted Vermont home">
+    
+    <title>Contact Us - Vermont Paint Works</title>
+    
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/images/logo.svg">
+    <link rel="mask-icon" href="/assets/images/logo.svg" color="#1a5438">
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="/assets/js/include.js"></script>
+    <link rel="canonical" href="https://www.vermontpaintworks.com/contact.html">
+</head>
+<body>
+    <div data-include="/partials/header.html"></div>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>Get in touch for a free consultation and quote</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Get in Touch</h2>
+                        <p>Ready to start your painting project? Contact us today for a free, no-obligation consultation and quote.</p>
+                        <div class="section-media">
+                            <img class="section-image" src="/assets/images/colorful-house/colorful-after-side.jpg" alt="Freshly painted Vermont home" width="1200" height="800" loading="lazy" decoding="async">
+                        </div>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <h3>Phone</h3>
+                                <p><a href="tel:+18025551234">(802) 555-1234</a></p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3>Email</h3>
+                                <p><a href="mailto:info@vermontpaintworks.com">info@vermontpaintworks.com</a></p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3>Service Area</h3>
+                                <p>Serving all of Vermont and surrounding areas</p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3>Hours</h3>
+                                <p>Monday - Friday: 8:00 AM - 6:00 PM<br>
+                                Saturday: 9:00 AM - 4:00 PM<br>
+                                Sunday: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper">
+                        <h2>Request a Quote</h2>
+                        <form class="contact-form" action="/submit-form" method="POST" aria-describedby="required-note">
+                            <p class="form-hint" id="required-note">Fields marked with * are required.</p>
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" autocomplete="name" minlength="2" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" autocomplete="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" pattern="^\+?[0-9\s().-]{7,}$" aria-describedby="phone-hint">
+                                <p class="form-hint" id="phone-hint">Example: (802) 555-1234</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service">Service Type</label>
+                                <select id="service" name="service">
+                                    <option value="">Select a service...</option>
+                                    <option value="interior">Interior Painting</option>
+                                    <option value="exterior">Exterior Painting</option>
+                                    <option value="commercial">Commercial Painting</option>
+                                    <option value="specialty">Specialty Services</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Project Details *</label>
+                                <textarea id="message" name="message" rows="6" minlength="10" required aria-describedby="message-hint"></textarea>
+                                <p class="form-hint" id="message-hint">Include scope, timeline, and any specific requirements.</p>
+                            </div>
+                            
+                            <button type="submit" class="submit-button">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div data-include="/partials/footer.html"></div>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
