@@ -1,4 +1,22 @@
 (function(){
+    // Create descriptive alt text from filename
+    function createAltText(filename, category) {
+        // Remove extension and clean up filename
+        const cleanName = filename
+            .replace(/\.[^/.]+$/, '') // remove extension
+            .replace(/[-_]/g, ' ')     // replace dashes/underscores with spaces
+            .replace(/\s+/g, ' ')      // normalize spaces
+            .trim();
+        
+        // Capitalize first letter of each word
+        const formatted = cleanName
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+        
+        return `${category} - ${formatted}`;
+    }
+
     // Render a gallery set into the container with minimal duplication
     function renderGallerySet(set, containerId) {
         const container = document.getElementById(containerId);
@@ -6,23 +24,103 @@
 
         const grid = document.createElement('div');
         grid.className = 'gallery-grid';
+        grid.setAttribute('role', 'list');
+        grid.setAttribute('aria-label', `${set.title} gallery`);
 
-        set.images.forEach(filename => {
+        set.images.forEach((filename, index) => {
             const item = document.createElement('figure');
             item.className = 'gallery-item';
+            item.setAttribute('role', 'listitem');
+
+            const link = document.createElement('a');
+            link.href = `/assets/images/${set.dir}/${filename}`;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.setAttribute('aria-label', `View full size image ${index + 1}`);
 
             const img = document.createElement('img');
             img.src = `/assets/images/${set.dir}/${filename}`;
-            img.alt = `${set.title} — ${filename}`;
+            img.alt = createAltText(filename, set.title);
             img.loading = 'lazy';
+            img.decoding = 'async';
 
-            item.appendChild(img);
+            link.appendChild(img);
+            item.appendChild(link);
             grid.appendChild(item);
         });
 
         // Clear and append grid
         container.innerHTML = '';
         container.appendChild(grid);
+    }
+
+    // Lightbox functionality
+    let currentImages = [];
+    let currentIndex = 0;
+    let lightboxModal = null;
+
+    function createLightbox() {
+        lightboxModal = document.createElement('div');
+        lightboxModal.className = 'lightbox-modal';
+        lightboxModal.innerHTML = `
+            <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+            <button class="lightbox-nav prev" aria-label="Previous image">&lsaquo;</button>
+            <button class="lightbox-nav next" aria-label="Next image">&rsaquo;</button>
+            <div class="lightbox-content">
+                <img src="" alt="">
+            </div>
+        `;
+        document.body.appendChild(lightboxModal);
+
+        const closeBtn = lightboxModal.querySelector('.lightbox-close');
+        const prevBtn = lightboxModal.querySelector('.prev');
+        const nextBtn = lightboxModal.querySelector('.next');
+
+        closeBtn.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+        nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+        
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxModal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+            if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+        });
+    }
+
+    function openLightbox(images, index) {
+        if (!lightboxModal) createLightbox();
+        currentImages = images;
+        currentIndex = index;
+        showImage(index);
+        lightboxModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightboxModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showImage(index) {
+        if (index < 0) index = currentImages.length - 1;
+        if (index >= currentImages.length) index = 0;
+        currentIndex = index;
+
+        const img = lightboxModal.querySelector('.lightbox-content img');
+        const imageData = currentImages[index];
+
+        img.src = imageData.src;
+        img.alt = imageData.alt;
+
+        const prevBtn = lightboxModal.querySelector('.prev');
+        const nextBtn = lightboxModal.querySelector('.next');
+        prevBtn.style.display = currentImages.length > 1 ? 'flex' : 'none';
+        nextBtn.style.display = currentImages.length > 1 ? 'flex' : 'none';
     }
 
     function initGallery() {
@@ -36,9 +134,47 @@
         };
 
         artSets.forEach(set => {
-            // try to find a matching container by title mapping first, otherwise fall back to dir-based id
             const containerId = mapping[set.title] || `${set.dir}-container`;
-            renderGallerySet(set, containerId);
+            const container = document.getElementById(containerId);
+            if (!container || !Array.isArray(set.images)) return;
+
+            const grid = document.createElement('div');
+            grid.className = 'gallery-grid';
+            grid.setAttribute('role', 'list');
+            grid.setAttribute('aria-label', `${set.title} gallery`);
+
+            const images = set.images.map((filename, idx) => ({
+                src: `/assets/images/${set.dir}/${filename}`,
+                alt: createAltText(filename, set.title)
+            }));
+
+            set.images.forEach((filename, index) => {
+                const item = document.createElement('figure');
+                item.className = 'gallery-item';
+                item.setAttribute('role', 'listitem');
+                item.style.cursor = 'pointer';
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('aria-label', `View ${createAltText(filename, set.title)}`);
+
+                const img = document.createElement('img');
+                img.src = `/assets/images/${set.dir}/${filename}`;
+                img.alt = createAltText(filename, set.title);
+                img.loading = 'lazy';
+                img.decoding = 'async';
+
+                item.appendChild(img);
+                item.addEventListener('click', () => openLightbox(images, index));
+                item.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(images, index);
+                    }
+                });
+                grid.appendChild(item);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(grid);
         });
     }
 

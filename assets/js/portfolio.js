@@ -161,20 +161,13 @@ function initPortfolio() {
     }
 
     const basePath = '/assets/images/';
-    const { streetArtSets, beforeAfterSets } = window.portfolioData;
+    const { beforeAfterSets } = window.portfolioData;
 
     const beforeAfterContainer = document.getElementById('before-after-container');
     if (beforeAfterContainer && beforeAfterSets) {
         beforeAfterSets.forEach(set => {
             const item = createBeforeAfterItem(set, basePath);
             beforeAfterContainer.appendChild(item);
-        });
-    }
-    const artContainer = document.getElementById('art-container');
-    if (artContainer && streetArtSets) {
-        streetArtSets.forEach(set => {
-            const item = createBeforeAfterItem(set, basePath);
-            artContainer.appendChild(item);
         });
     }
 }
