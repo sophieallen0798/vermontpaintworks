@@ -45,14 +45,43 @@
         <section class="page-header">
             <div class="container">
                 <h1>Portfolio</h1>
-                <p>View our recent projects below. </p>
+                <p>View our recent projects and artwork.</p>
             </div>
         </section>
 
-        <section class="portfolio-section">
+        <!-- Tab Navigation -->
+        <section class="tab-section">
             <div class="container">
-                <div class="portfolio-category">
-                    <div id="before-after-container" class="carousel-container"></div>
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="projects">Projects</button>
+                    <button class="tab-button" data-tab="artwork">Artwork</button>
+                </div>
+
+                <!-- Projects Tab Content -->
+                <div id="projects-tab" class="tab-content active">
+                    <div class="portfolio-category">
+                        <div id="before-after-container" class="carousel-container"></div>
+                    </div>
+                </div>
+
+                <!-- Artwork Tab Content -->
+                <div id="artwork-tab" class="tab-content">
+                    <div class="gallery-category" id="livingroom-mural">
+                        <h2>Livingroom Mural</h2>
+                        <div id="tree-mural-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="chalk-art">
+                        <h2>Chalk Art</h2>
+                        <div id="chalk-art-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="wall-art">
+                        <h2>Wall Art</h2>
+                        <div id="wall-art-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="stage-sets">
+                        <h2>Stage Sets</h2>
+                        <div id="stage-sets-container" class="gallery-container"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -130,10 +159,88 @@
                 }
             ]
         };
+
+        // Gallery/Artwork data configuration
+        const artSets = [
+            {
+                title: 'Chalk Art',
+                dir: 'street-art',
+                images: [
+                    '20180525_212156.jpg',
+                    '20180608_213611 (1).jpg',
+                    'chalk-art-crane.JPG',
+                    'chalk-crane.jpg',
+                    'chalk-door.JPG',
+                    'chalk-egg.jpg',
+                    'chalk-lake-scene.JPG',
+                    'chalk-lock.JPG',
+                    'chalk-loon.jpg',
+                    'chalk-pencils.JPG',
+                    'chalk-seahorse.JPG',
+                    'chalk-seahorses-2.jpg',
+                    'chalk-woman.JPG',
+                    'seahorses.JPG'
+                ]
+            },
+            {
+                title: 'Tree Mural',
+                dir: 'tree-mural',
+                images: [
+                    'full-tree-2.jpg',
+                    'bare-tree.jpg',
+                    'owl-in-tree.jpg',
+                    'squirrel.jpg',
+                    'tree-trunk.jpg'
+                ]
+            },
+            {
+                title: 'Wall Art',
+                dir: 'wall-art',
+                images: [
+                    'elephant-painting.jpg',
+                    'bird-painting.jpg',
+                    'night-sky.jpg'
+                ]
+            },
+            {
+                title: 'Stage Sets',
+                dir: 'sets',
+                images: [
+                    'cactus-set.jpg',
+                    'desert-set.jpg',
+                    'farm-set.jpg',
+                    'painted-floor.jpg',
+                    'stage.jpg'
+                ]
+            }
+        ];
     </script>
 
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/portfolio.js"></script>
+    <script src="/assets/js/gallery.js"></script>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(targetTab + '-tab').classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
