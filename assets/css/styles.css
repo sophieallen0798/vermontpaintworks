@@ -6,20 +6,6 @@
     padding: 0;
 }
 
-/* Prevent flash of unstyled content when loading partials */
-[data-include] {
-    visibility: hidden;
-}
-
-[data-include].loaded {
-    visibility: visible;
-}
-
-/* Reserve space for partials during load to prevent layout shift */
-[data-include]:empty {
-    min-height: 70px;
-}
-
 :root {
     /* Color Palette */
     --primary-color: rgb(26, 84, 56);
@@ -196,6 +182,15 @@ p {
     list-style: none;
 }
 
+.nav-links.active {
+    display: flex;
+}
+
+.active-tab a {
+    background-color: var(--accent);
+    color: white;
+}
+
 .nav-links li {
     width: 100%;
 }
@@ -241,20 +236,11 @@ p {
 /* HERO SECTION - MOBILE FIRST */
 .hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../assets/images/colorful-house/colorful-full-after.jpg");
-    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); */
     color: white;
     padding: var(--spacing-2xl) 0;
     text-align: center;
     animation: fadeIn 2s ease-in forwards;
 }
-
-/* .hero h1::before {
-    content: "";
-    position: absolute;
-    animation: slideIn 1.5s ease-in forwards;
-    /* z-index: -1; Puts the image behind the content if necessary 
-}
-*/
 
 .hero h1 {
     color: white;
@@ -272,12 +258,10 @@ p {
 
 /* PAGE HEADER */
 .page-header {
-    /* background-color: var(--bg-light); */
     padding: var(--spacing-xl) 0;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
     background-color: #1F3D2B;
-    /* background-color: #B8A99A; */
 }
 
 .page-header h1 {
@@ -291,6 +275,7 @@ p {
         transform: translateY(30px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -360,7 +345,8 @@ p {
     -webkit-column-gap: var(--spacing-sm);
     column-gap: var(--spacing-sm);
     margin: 1rem;
-    line-height: 0; /* remove inline white-space gaps between inline-block children */
+    line-height: 0;
+    /* remove inline white-space gaps between inline-block children */
 }
 
 .gallery-item {
@@ -374,8 +360,10 @@ p {
     break-inside: avoid;
     position: relative;
     margin: 0 0 var(--spacing-sm);
-    vertical-align: top; /* ensure items align to top, removing small uneven gaps */
-    line-height: var(--line-height-base); /* restore normal line-height for item content */
+    vertical-align: top;
+    /* ensure items align to top, removing small uneven gaps */
+    line-height: var(--line-height-base);
+    /* restore normal line-height for item content */
 }
 
 .gallery-item img {
@@ -1300,11 +1288,21 @@ main {
 }
 
 @keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

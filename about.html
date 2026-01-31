@@ -30,17 +30,38 @@
 
   <title>About Us - Vermont Paint Works</title>
 
+  <link rel="preload" href="assets/images/logo.svg" as="image" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/images/logo.svg">
   <link rel="mask-icon" href="assets/images/logo.svg" color="#1a5438">
   <link rel="manifest" href="/site.webmanifest">
-  <script defer src="assets/js/include.js"></script>
   <link rel="canonical" href="https://www.vermontpaintworks.com/about.html">
 </head>
 
 <body>
-  <div data-include="partials/header.html"></div>
+  <header class="site-header">
+  <div class="container">
+    <nav class="main-nav" aria-label="Main navigation">
+        <div class="logo">
+          <img src="assets/images/logo.svg" alt="Vermont Paint Works Logo">
+          <a href="index.html">Vermont Paint Works</a>
+        </div>
+      <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li class="active-tab"><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </div>
+</header>
 
   <main>
     <section class="page-header">
@@ -84,7 +105,31 @@
     </section>
   </main>
 
-  <div data-include="partials/footer.html"></div>
+  <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Vermont Paint Works</h3>
+                <p>Professional painting services for Vermont homes and businesses</p>
+                <img src="assets/images/logo.svg" alt="Vermont Paint Works Logo">
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                        <li><a href="/gallery.html">Gallery</a></li>
+                    <li><a href="/services.html">Services</a></li>
+                    <li><a href="/portfolio.html">Portfolio</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vermont Paint Works. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
   <script src="assets/js/main.js"></script>
 </body>
