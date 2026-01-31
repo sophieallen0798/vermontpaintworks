@@ -155,13 +155,12 @@ function createBeforeAfterItem(data, basePath) {
 }
 
 function initPortfolio() {
-    if (!window.portfolioData) {
-        console.error('Portfolio data not found');
+    if (typeof portfolioSets === 'undefined' || !Array.isArray(portfolioSets)) {
         return;
     }
 
-    const basePath = '/assets/images/';
-    const { beforeAfterSets } = window.portfolioData;
+    const basePath = 'assets/images/';
+    const beforeAfterSets = portfolioSets;
 
     const beforeAfterContainer = document.getElementById('before-after-container');
     if (beforeAfterContainer && beforeAfterSets) {

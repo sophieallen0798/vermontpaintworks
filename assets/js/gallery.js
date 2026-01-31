@@ -151,7 +151,7 @@
       if (Array.isArray(set.before)) {
         set.before.forEach((filename) =>
           images.push({
-            src: `/assets/images/${set.dir}/${filename}`,
+            src: `assets/images/${set.dir}/${filename}`,
             alt: createAltText(filename, set.title),
             label: "Before",
           }),
@@ -161,7 +161,7 @@
       if (Array.isArray(set.after)) {
         set.after.forEach((filename) =>
           images.push({
-            src: `/assets/images/${set.dir}/${filename}`,
+            src: `assets/images/${set.dir}/${filename}`,
             alt: createAltText(filename, set.title),
             label: "After",
           }),
@@ -171,7 +171,7 @@
       if (Array.isArray(set.images)) {
         set.images.forEach((filename) =>
           images.push({
-            src: `/assets/images/${set.dir}/${filename}`,
+            src: `assets/images/${set.dir}/${filename}`,
             alt: createAltText(filename, set.title),
             label: null,
           }),
@@ -200,7 +200,7 @@
       if (!container || !Array.isArray(set.images)) return;
 
       const images = set.images.map((filename) => ({
-        src: `/assets/images/${set.dir}/${filename}`,
+        src: `assets/images/${set.dir}/${filename}`,
         alt: createAltText(filename, set.title),
         label: null,
       }));
