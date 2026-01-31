@@ -6,6 +6,20 @@
     padding: 0;
 }
 
+/* Prevent flash of unstyled content when loading partials */
+[data-include] {
+    visibility: hidden;
+}
+
+[data-include].loaded {
+    visibility: visible;
+}
+
+/* Reserve space for partials during load to prevent layout shift */
+[data-include]:empty {
+    min-height: 70px;
+}
+
 :root {
     /* Color Palette */
     --primary-color: rgb(26, 84, 56);
@@ -226,22 +240,34 @@ p {
 
 /* HERO SECTION - MOBILE FIRST */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../assets/images/colorful-house/colorful-full-after.jpg");
+    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); */
     color: white;
     padding: var(--spacing-2xl) 0;
     text-align: center;
+    animation: fadeIn 2s ease-in forwards;
 }
+
+/* .hero h1::before {
+    content: "";
+    position: absolute;
+    animation: slideIn 1.5s ease-in forwards;
+    /* z-index: -1; Puts the image behind the content if necessary 
+}
+*/
 
 .hero h1 {
     color: white;
     font-size: 1.75rem;
     margin-bottom: var(--spacing-md);
+    animation: slideUp 0.8s ease-out forwards;
 }
 
 .hero-subtitle {
     font-size: 1.125rem;
     margin-bottom: var(--spacing-lg);
     opacity: 0.95;
+    animation: slideUp 0.8s ease-out forwards;
 }
 
 /* PAGE HEADER */
@@ -257,11 +283,24 @@ p {
 .page-header h1 {
     color: #f7f1e2;
     margin-bottom: var(--spacing-sm);
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .page-header p {
     font-size: 1.125rem;
     color: #f7f1e2;
+    animation: slideUp 0.8s ease-out forwards;
 }
 
 /* BUTTONS */
