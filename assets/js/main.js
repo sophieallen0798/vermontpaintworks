@@ -1,67 +1,64 @@
-function setActiveNavLink(navLinks) {
-    const links = navLinks.querySelectorAll('a');
-    const currentPath = window.location.pathname;
-
-    links.forEach(link => {
-        const linkPath = new URL(link.href, window.location.origin).pathname;
-        const isHome = linkPath === '/' && (currentPath === '/' || currentPath === '/index.html');
-        const isMatch = isHome || linkPath === currentPath;
-
-        if (isMatch) {
-            link.classList.add('active');
-            link.setAttribute('aria-current', 'page');
-        } else {
-            link.classList.remove('active');
-            link.removeAttribute('aria-current');
-        }
-    });
+// Get current page filename from URL
+function getCurrentPage() {
+  const path = window.location.pathname;
+  let page = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+  return page.includes('.') ? page : page + '.html';
 }
 
-function initMobileMenu(menuToggle, navLinks) {
-    if (menuToggle.dataset.navInitialized === 'true') {
-        return;
-    }
-
-    menuToggle.dataset.navInitialized = 'true';
-
-    menuToggle.addEventListener('click', function() {
-        const isOpen = navLinks.classList.toggle('active');
-        this.classList.toggle('active');
-        this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    document.addEventListener('click', function(event) {
-        const isClickInsideNav = navLinks.contains(event.target);
-        const isClickOnToggle = menuToggle.contains(event.target);
-
-        if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-        }
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
+// Set active class on current nav link
+function setActiveNavLink() {
+  const currentPage = getCurrentPage();
+  const navLinks = document.querySelectorAll('.nav-links a');
+  
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    const linkPage = href.substring(href.lastIndexOf('/') + 1);
+    link.classList.toggle('active', currentPage === linkPage);
+  });
 }
 
-window.initNavigation = function initNavigation() {
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+// Mobile menu functionality
+function initMobileMenu() {
+  const menuToggle = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (!menuToggle || !navLinks || menuToggle.dataset.initialized) return;
+  menuToggle.dataset.initialized = 'true';
 
-    if (!menuToggle || !navLinks) {
-        return;
+  const closeMenu = () => {
+    navLinks.classList.remove('active');
+    menuToggle.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+      closeMenu();
     }
+  });
 
-    initMobileMenu(menuToggle, navLinks);
-    setActiveNavLink(navLinks);
-};
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    window.initNavigation();
-});
+// Initialize navigation
+function initNavigation() {
+  initMobileMenu();
+  setActiveNavLink();
+}
+
+// Expose for include.js
+window.initNavigation = initNavigation;
+
+// Run on DOM ready
+document.addEventListener('DOMContentLoaded', initNavigation);
+
+// Update active link after view transitions
+document.addEventListener('pageswap', setActiveNavLink);

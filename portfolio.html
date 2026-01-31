@@ -29,17 +29,17 @@
 
     <title>Portfolio - Vermont Paint Works</title>
 
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="icon" href="/assets/images/logo.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/assets/images/logo.svg">
-    <link rel="mask-icon" href="/assets/images/logo.svg" color="#1a5438">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/images/logo.svg">
+    <link rel="mask-icon" href="assets/images/logo.svg" color="#1a5438">
     <link rel="manifest" href="/site.webmanifest">
-    <script defer src="/assets/js/include.js"></script>
+        <script defer src="assets/js/include.js"></script>
     <link rel="canonical" href="https://www.vermontpaintworks.com/portfolio.html">
 </head>
 
 <body>
-    <div data-include="/partials/header.html"></div>
+    <div data-include="partials/header.html"></div>
 
     <main>
         <section class="page-header">
@@ -59,30 +59,44 @@
 
                 <!-- Projects Tab Content -->
                 <div id="projects-tab" class="tab-content active">
-                    <div class="portfolio-category">
-                        <div id="before-after-container" class="carousel-container"></div>
+                    <div class="gallery-category" id="exterior-house-painting">
+                        <h2>Exterior House Painting</h2>
+                        <div id="exterior-house-painting-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="tiny-house">
+                        <h2>Tiny House</h2>
+                        <div id="tiny-house-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="porch-restoration">
+                        <h2>Porch Restoration</h2>
+                        <div id="porch-restoration-container" class="gallery-container"></div>
+                    </div>
+                    <div class="gallery-category" id="stairs">
+                        <h2>Stairs</h2>
+                        <div id="stairs-container" class="gallery-container"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Artwork Tab Content -->
-                <div id="artwork-tab" class="tab-content">
-                    <div class="gallery-category" id="livingroom-mural">
-                        <h2>Livingroom Mural</h2>
-                        <div id="tree-mural-container" class="gallery-container"></div>
-                    </div>
-                    <div class="gallery-category" id="chalk-art">
-                        <h2>Chalk Art</h2>
-                        <div id="chalk-art-container" class="gallery-container"></div>
-                    </div>
-                    <div class="gallery-category" id="wall-art">
-                        <h2>Wall Art</h2>
-                        <div id="wall-art-container" class="gallery-container"></div>
-                    </div>
-                    <div class="gallery-category" id="stage-sets">
-                        <h2>Stage Sets</h2>
-                        <div id="stage-sets-container" class="gallery-container"></div>
-                    </div>
+            <!-- Artwork Tab Content -->
+            <div id="artwork-tab" class="tab-content">
+                <div class="gallery-category" id="livingroom-mural">
+                    <h2>Livingroom Mural</h2>
+                    <div id="tree-mural-container" class="gallery-container"></div>
                 </div>
+                <div class="gallery-category" id="chalk-art">
+                    <h2>Chalk Art</h2>
+                    <div id="chalk-art-container" class="gallery-container"></div>
+                </div>
+                <div class="gallery-category" id="wall-art">
+                    <h2>Wall Art</h2>
+                    <div id="wall-art-container" class="gallery-container"></div>
+                </div>
+                <div class="gallery-category" id="stage-sets">
+                    <h2>Stage Sets</h2>
+                    <div id="stage-sets-container" class="gallery-container"></div>
+                </div>
+            </div>
             </div>
         </section>
 
@@ -90,75 +104,73 @@
             <div class="container">
                 <h2>Let's Create Your Next Success Story</h2>
                 <p>Contact us to discuss your project.</p>
-                <a href="/contact.html" class="cta-button">Get Started</a>
+                <a href="contact.html" class="cta-button">Get Started</a>
             </div>
         </section>
     </main>
 
-    <div data-include="/partials/footer.html"></div>
+        <div data-include="partials/footer.html"></div>
 
     <script>
         // Portfolio data configuration
-        window.portfolioData = {
-            beforeAfterSets: [
-                {
-                    title: 'Exterior House Painting',
-                    dir: 'colorful-house',
-                    before: [
-                        'colorful-before-side.jpg',
-                        'colorful-porch-before.jpg',
-                        'colorful-round-before.jpg',
-                    ],
-                    after: [
-                        'colorful-full-after.jpg',
-                        'colorful-after-front.jpg',
-                        'colorful-after-angle.jpg',
-                        'colorful-after-curve.jpg',
-                        'colorful-after-side.jpg',
-                        'colorful-porch-after.jpg',
-                        'colorful-porch-after2.jpg'
-                    ]
-                },
-                {
-                    title: 'Porch Restoration',
-                    dir: 'porch',
-                    before: [
-                        'porch-before-during.jpg',
-                        'porch-before-during-2.jpg',
-                        'porch-before-side.jpg'
-                    ],
-                    after: [
-                        'porch-after.jpg',
-                        'porch-after-1.jpg'
-                    ]
-                },
-                {
-                    title: 'Tiny House Build',
-                    dir: 'tiny-house',
-                    images: [
-                        'tiny-house-finished.jpg',
-                        'tiny-house-front.jpg',
-                        'tiny-house-floor.jpg',
-                        'tiny-house-loft.jpg',
-                        'tiny-house-interior-floor.jpg',
-                        'tiny-house-interior-framing.jpg',
-                        'tiny-house-siding.jpg',
-                        'tiny-house-trailer.jpg',
-                        'tiny-house-wrapped.jpg',
-                        'tiny-house-working.jpg',
-                        'tiny-house-full-frame.jpg'
-                    ]
-                },
-                {
-                    title: 'Stair Refinishing',
-                    dir: 'stairs',
-                    images: [
-                        'stairs.jpg',
-                        'stairs-with-tread.jpg'
-                    ]
-                }
-            ]
-        };
+        portfolioSets = [
+            {
+                title: 'Exterior House Painting',
+                dir: 'colorful-house',
+                before: [
+                    'colorful-before-side.jpg',
+                    'colorful-porch-before.jpg',
+                    'colorful-round-before.jpg',
+                ],
+                after: [
+                    'colorful-full-after.jpg',
+                    'colorful-after-front.jpg',
+                    'colorful-after-angle.jpg',
+                    'colorful-after-curve.jpg',
+                    'colorful-after-side.jpg',
+                    'colorful-porch-after.jpg',
+                    'colorful-porch-after2.jpg'
+                ]
+            },
+            {
+                title: 'Porch Restoration',
+                dir: 'porch',
+                before: [
+                    'porch-before-during.jpg',
+                    'porch-before-during-2.jpg',
+                    'porch-before-side.jpg'
+                ],
+                after: [
+                    'porch-after.jpg',
+                    'porch-after-1.jpg'
+                ]
+            },
+            {
+                title: 'Tiny House Build',
+                dir: 'tiny-house',
+                images: [
+                    'tiny-house-finished.jpg',
+                    'tiny-house-front.jpg',
+                    'tiny-house-floor.jpg',
+                    'tiny-house-loft.jpg',
+                    'tiny-house-interior-floor.jpg',
+                    'tiny-house-interior-framing.jpg',
+                    'tiny-house-siding.jpg',
+                    'tiny-house-trailer.jpg',
+                    'tiny-house-wrapped.jpg',
+                    'tiny-house-working.jpg',
+                    'tiny-house-full-frame.jpg'
+                ]
+            },
+            {
+                title: 'Stair Refinishing',
+                dir: 'stairs',
+                images: [
+                    'stairs.jpg',
+                    'stairs-with-tread.jpg'
+                ]
+            }
+        ];
 
         // Gallery/Artwork data configuration
         const artSets = [
@@ -216,9 +228,9 @@
         ];
     </script>
 
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/portfolio.js"></script>
-    <script src="/assets/js/gallery.js"></script>
+        <script src="assets/js/main.js"></script>
+    <script src="assets/js/portfolio.js"></script>
+    <script src="assets/js/gallery.js"></script>
 
     <script>
         // Tab switching functionality

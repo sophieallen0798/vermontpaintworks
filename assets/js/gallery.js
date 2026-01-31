@@ -1,68 +1,31 @@
-(function(){
-    // Create descriptive alt text from filename
-    function createAltText(filename, category) {
-        // Remove extension and clean up filename
-        const cleanName = filename
-            .replace(/\.[^/.]+$/, '') // remove extension
-            .replace(/[-_]/g, ' ')     // replace dashes/underscores with spaces
-            .replace(/\s+/g, ' ')      // normalize spaces
-            .trim();
-        
-        // Capitalize first letter of each word
-        const formatted = cleanName
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
-        
-        return `${category} - ${formatted}`;
-    }
+(function () {
+  // Create descriptive alt text from filename
+  function createAltText(filename, category) {
+    // Remove extension and clean up filename
+    const cleanName = filename
+      .replace(/\.[^/.]+$/, "") // remove extension
+      .replace(/[-_]/g, " ") // replace dashes/underscores with spaces
+      .replace(/\s+/g, " ") // normalize spaces
+      .trim();
 
-    // Render a gallery set into the container with minimal duplication
-    function renderGallerySet(set, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container || !set || !Array.isArray(set.images)) return;
+    // Capitalize first letter of each word
+    const formatted = cleanName
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
 
-        const grid = document.createElement('div');
-        grid.className = 'gallery-grid';
-        grid.setAttribute('role', 'list');
-        grid.setAttribute('aria-label', `${set.title} gallery`);
+    return `${category} - ${formatted}`;
+  }
 
-        set.images.forEach((filename, index) => {
-            const item = document.createElement('figure');
-            item.className = 'gallery-item';
-            item.setAttribute('role', 'listitem');
+  // Lightbox functionality
+  let currentImages = [];
+  let currentIndex = 0;
+  let lightboxModal = null;
 
-            const link = document.createElement('a');
-            link.href = `/assets/images/${set.dir}/${filename}`;
-            link.target = '_blank';
-            link.rel = 'noopener';
-            link.setAttribute('aria-label', `View full size image ${index + 1}`);
-
-            const img = document.createElement('img');
-            img.src = `/assets/images/${set.dir}/${filename}`;
-            img.alt = createAltText(filename, set.title);
-            img.loading = 'lazy';
-            img.decoding = 'async';
-
-            link.appendChild(img);
-            item.appendChild(link);
-            grid.appendChild(item);
-        });
-
-        // Clear and append grid
-        container.innerHTML = '';
-        container.appendChild(grid);
-    }
-
-    // Lightbox functionality
-    let currentImages = [];
-    let currentIndex = 0;
-    let lightboxModal = null;
-
-    function createLightbox() {
-        lightboxModal = document.createElement('div');
-        lightboxModal.className = 'lightbox-modal';
-        lightboxModal.innerHTML = `
+  function createLightbox() {
+    lightboxModal = document.createElement("div");
+    lightboxModal.className = "lightbox-modal";
+    lightboxModal.innerHTML = `
             <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
             <button class="lightbox-nav prev" aria-label="Previous image">&lsaquo;</button>
             <button class="lightbox-nav next" aria-label="Next image">&rsaquo;</button>
@@ -70,118 +33,191 @@
                 <img src="" alt="">
             </div>
         `;
-        document.body.appendChild(lightboxModal);
+    document.body.appendChild(lightboxModal);
 
-        const closeBtn = lightboxModal.querySelector('.lightbox-close');
-        const prevBtn = lightboxModal.querySelector('.prev');
-        const nextBtn = lightboxModal.querySelector('.next');
+    const closeBtn = lightboxModal.querySelector(".lightbox-close");
+    const prevBtn = lightboxModal.querySelector(".prev");
+    const nextBtn = lightboxModal.querySelector(".next");
 
-        closeBtn.addEventListener('click', closeLightbox);
-        prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
-        nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
-        
-        lightboxModal.addEventListener('click', (e) => {
-            if (e.target === lightboxModal) closeLightbox();
-        });
+    closeBtn.addEventListener("click", closeLightbox);
+    prevBtn.addEventListener("click", () => showImage(currentIndex - 1));
+    nextBtn.addEventListener("click", () => showImage(currentIndex + 1));
 
-        document.addEventListener('keydown', (e) => {
-            if (!lightboxModal.classList.contains('active')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
-            if (e.key === 'ArrowRight') showImage(currentIndex + 1);
-        });
-    }
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) closeLightbox();
+    });
 
-    function openLightbox(images, index) {
-        if (!lightboxModal) createLightbox();
-        currentImages = images;
-        currentIndex = index;
-        showImage(index);
-        lightboxModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+    document.addEventListener("keydown", (e) => {
+      if (!lightboxModal.classList.contains("active")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+      if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    });
+  }
 
-    function closeLightbox() {
-        lightboxModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+  function openLightbox(images, index) {
+    if (!lightboxModal) createLightbox();
+    currentImages = images;
+    currentIndex = index;
+    showImage(index);
+    lightboxModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
 
-    function showImage(index) {
-        if (index < 0) index = currentImages.length - 1;
-        if (index >= currentImages.length) index = 0;
-        currentIndex = index;
+  function closeLightbox() {
+    lightboxModal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
 
-        const img = lightboxModal.querySelector('.lightbox-content img');
-        const imageData = currentImages[index];
+  function showImage(index) {
+    if (index < 0) index = currentImages.length - 1;
+    if (index >= currentImages.length) index = 0;
+    currentIndex = index;
 
-        img.src = imageData.src;
-        img.alt = imageData.alt;
+    const img = lightboxModal.querySelector(".lightbox-content img");
+    const imageData = currentImages[index];
 
-        const prevBtn = lightboxModal.querySelector('.prev');
-        const nextBtn = lightboxModal.querySelector('.next');
-        prevBtn.style.display = currentImages.length > 1 ? 'flex' : 'none';
-        nextBtn.style.display = currentImages.length > 1 ? 'flex' : 'none';
-    }
+    img.src = imageData.src;
+    img.alt = imageData.alt;
 
-    function initGallery() {
-        if (typeof artSets === 'undefined' || !Array.isArray(artSets)) return;
+    const prevBtn = lightboxModal.querySelector(".prev");
+    const nextBtn = lightboxModal.querySelector(".next");
+    prevBtn.style.display = currentImages.length > 1 ? "flex" : "none";
+    nextBtn.style.display = currentImages.length > 1 ? "flex" : "none";
+  }
 
-        const mapping = {
-            'Chalk Art': 'chalk-art-container',
-            'Tree Mural': 'tree-mural-container',
-            'Wall Art': 'wall-art-container',
-            'Stage Sets': 'stage-sets-container'
-        };
+  // Unified function to render image gallery with optional labels
+  function renderImageGallery(images, title, parentContainer) {
+    const grid = document.createElement("div");
+    grid.className = "gallery-grid";
+    grid.setAttribute("role", "list");
+    grid.setAttribute("aria-label", `${title} gallery`);
 
-        artSets.forEach(set => {
-            const containerId = mapping[set.title] || `${set.dir}-container`;
-            const container = document.getElementById(containerId);
-            if (!container || !Array.isArray(set.images)) return;
+    images.forEach((imageData, index) => {
+      const item = document.createElement("figure");
+      item.className = "gallery-item";
+      item.setAttribute("role", "listitem");
+      item.style.cursor = "pointer";
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", `View ${imageData.alt}`);
 
-            const grid = document.createElement('div');
-            grid.className = 'gallery-grid';
-            grid.setAttribute('role', 'list');
-            grid.setAttribute('aria-label', `${set.title} gallery`);
+      const img = document.createElement("img");
+      img.src = imageData.src;
+      img.alt = imageData.alt;
+      img.loading = "lazy";
+      img.decoding = "async";
 
-            const images = set.images.map((filename, idx) => ({
-                src: `/assets/images/${set.dir}/${filename}`,
-                alt: createAltText(filename, set.title)
-            }));
+      item.appendChild(img);
 
-            set.images.forEach((filename, index) => {
-                const item = document.createElement('figure');
-                item.className = 'gallery-item';
-                item.setAttribute('role', 'listitem');
-                item.style.cursor = 'pointer';
-                item.setAttribute('tabindex', '0');
-                item.setAttribute('aria-label', `View ${createAltText(filename, set.title)}`);
+      // Add label if present
+      if (imageData.label) {
+        const label = document.createElement("span");
+        label.className = "image-label";
+        label.textContent = imageData.label;
+        item.appendChild(label);
+      }
 
-                const img = document.createElement('img');
-                img.src = `/assets/images/${set.dir}/${filename}`;
-                img.alt = createAltText(filename, set.title);
-                img.loading = 'lazy';
-                img.decoding = 'async';
+      item.addEventListener("click", () => openLightbox(images, index));
+      item.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLightbox(images, index);
+        }
+      });
+      grid.appendChild(item);
+    });
 
-                item.appendChild(img);
-                item.addEventListener('click', () => openLightbox(images, index));
-                item.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openLightbox(images, index);
-                    }
-                });
-                grid.appendChild(item);
-            });
+    parentContainer.appendChild(grid);
+  }
 
-            container.innerHTML = '';
-            container.appendChild(grid);
-        });
-    }
+  function initPortfolio() {
+    if (typeof portfolioSets === "undefined" || !Array.isArray(portfolioSets)) return;
 
-    // init after DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initGallery);
-    } else {
-        initGallery();
-    }
+    const mapping = {
+      "Tiny House": "tiny-house-container",
+      "Exterior House Painting": "exterior-house-painting-container",
+      "Porch Restoration": "porch-restoration-container",
+      "Stairs": "stairs-container",
+    };
+
+    portfolioSets.forEach((set) => {
+      const containerId = mapping[set.title] || `${set.dir}-container`;
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const images = [];
+
+      // combine before, after, and regular images into one array
+      if (Array.isArray(set.before)) {
+        set.before.forEach((filename) =>
+          images.push({
+            src: `/assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "Before",
+          }),
+        );
+      }
+
+      if (Array.isArray(set.after)) {
+        set.after.forEach((filename) =>
+          images.push({
+            src: `/assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "After",
+          }),
+        );
+      }
+
+      if (Array.isArray(set.images)) {
+        set.images.forEach((filename) =>
+          images.push({
+            src: `/assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: null,
+          }),
+        );
+      }
+
+      container.innerHTML = "";
+      renderImageGallery(images, set.title, container);
+    });
+  }
+
+  // Initialize art gallery
+  function initGallery() {
+    if (typeof artSets === "undefined" || !Array.isArray(artSets)) return;
+
+    const mapping = {
+      "Chalk Art": "chalk-art-container",
+      "Tree Mural": "tree-mural-container",
+      "Wall Art": "wall-art-container",
+      "Stage Sets": "stage-sets-container",
+    };
+
+    artSets.forEach((set) => {
+      const containerId = mapping[set.title] || `${set.dir}-container`;
+      const container = document.getElementById(containerId);
+      if (!container || !Array.isArray(set.images)) return;
+
+      const images = set.images.map((filename) => ({
+        src: `/assets/images/${set.dir}/${filename}`,
+        alt: createAltText(filename, set.title),
+        label: null,
+      }));
+
+      container.innerHTML = "";
+      renderImageGallery(images, set.title, container);
+    });
+  }
+
+  // init after DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      initGallery();
+      initPortfolio();
+    });
+  } else {
+    initGallery();
+    initPortfolio();
+  }
 })();
