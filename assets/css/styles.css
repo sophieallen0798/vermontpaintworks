@@ -1004,25 +1004,26 @@ p {
 
 /* CTA SECTION */
 .cta-section {
-    background-color: var(--bg-light);
+    background-color: var(--primary-dark);
     padding: var(--spacing-2xl) 0;
     text-align: center;
 }
 
 .cta-section h2 {
     margin-bottom: var(--spacing-sm);
+    color: white;
 }
 
 .cta-section p {
     font-size: 1.125rem;
     margin-bottom: var(--spacing-lg);
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .cta-section .cta-button {
-    background-color: var(--primary-color);
+    background-color: var(--accent);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--accent);
 }
 
 .cta-section .cta-button:hover {
@@ -1031,8 +1032,7 @@ p {
 
 /* FOOTER */
 .site-footer {
-    background-color: var(--text-color);
-    color: white;
+    background-color: var(--bg-color);
     padding: var(--spacing-xl) 0 var(--spacing-md) 0;
 }
 
@@ -1045,12 +1045,12 @@ p {
 
 .footer-info h3,
 .footer-links h4 {
-    color: white;
+    color: var(--text-color);
     margin-bottom: var(--spacing-sm);
 }
 
 .footer-info p {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
 }
 
 .footer-info img {
@@ -1070,13 +1070,13 @@ p {
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--primary-color);
 }
 
 .footer-bottom {
@@ -1087,7 +1087,7 @@ p {
 
 .footer-bottom p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-color);
 }
 
 /* ============================================
