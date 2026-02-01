@@ -1,179 +1,223 @@
-/**
- * Portfolio Carousel Implementation
- * Handles single image carousels and before/after comparison carousels
- */
+(function () {
+  // Create descriptive alt text from filename
+  function createAltText(filename, category) {
+    // Remove extension and clean up filename
+    const cleanName = filename
+      .replace(/\.[^/.]+$/, "") // remove extension
+      .replace(/[-_]/g, " ") // replace dashes/underscores with spaces
+      .replace(/\s+/g, " ") // normalize spaces
+      .trim();
 
-class Carousel {
-    constructor(container, images, options = {}) {
-        this.container = container;
-        this.images = images;
-        this.currentIndex = 0;
-        this.options = {
-            autoPlay: false,
-            autoPlayInterval: 5000,
-            ...options
-        };
-        
-        this.init();
-    }
+    // Capitalize first letter of each word
+    const formatted = cleanName
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
 
-    init() {
-        this.render();
-        this.attachEventListeners();
-        
-        if (this.options.autoPlay) {
-            this.startAutoPlay();
-        }
-    }
+    return `${category} - ${formatted}`;
+  }
 
-    render() {
-        this.container.innerHTML = `
-            <div class="carousel-wrapper">
-                <div class="carousel-slides">
-                    ${this.images.map((img, index) => {
-                        const src = (typeof img === 'string') ? img : img.src;
-                        const label = (typeof img === 'string') ? '' : img.label || '';
-                        const alt = `Project image ${index + 1}${label ? ' - ' + label : ''}`;
-                        return `
-                        <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
-                            <img src="${src}" alt="${alt}" loading="lazy">
-                            ${label ? `<span class="slide-photo-label">${label}</span>` : ''}
-                        </div>
-                    `}).join('')}
-                </div>
-                ${this.images.length > 1 ? `
-                    <button class="carousel-btn carousel-btn-prev" aria-label="Previous image">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <button class="carousel-btn carousel-btn-next" aria-label="Next image">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                    <div class="carousel-indicators">
-                        ${this.images.map((_, index) => `
-                            <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
-                                    data-index="${index}" 
-                                    aria-label="Go to image ${index + 1}">
-                            </button>
-                        `).join('')}
-                    </div>
-                ` : ''}
+  // Lightbox functionality
+  let currentImages = [];
+  let currentIndex = 0;
+  let lightboxModal = null;
+
+  function createLightbox() {
+    lightboxModal = document.createElement("div");
+    lightboxModal.className = "lightbox-modal";
+    lightboxModal.innerHTML = `
+            <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+            <button class="lightbox-nav prev" aria-label="Previous image">&lsaquo;</button>
+            <button class="lightbox-nav next" aria-label="Next image">&rsaquo;</button>
+            <div class="lightbox-content">
+                <img src="" alt="">
             </div>
         `;
-    }
+    document.body.appendChild(lightboxModal);
 
-    attachEventListeners() {
-        if (this.images.length <= 1) return;
+    const closeBtn = lightboxModal.querySelector(".lightbox-close");
+    const prevBtn = lightboxModal.querySelector(".prev");
+    const nextBtn = lightboxModal.querySelector(".next");
 
-        const prevBtn = this.container.querySelector('.carousel-btn-prev');
-        const nextBtn = this.container.querySelector('.carousel-btn-next');
-        const indicators = this.container.querySelectorAll('.carousel-indicator');
+    closeBtn.addEventListener("click", closeLightbox);
+    prevBtn.addEventListener("click", () => showImage(currentIndex - 1));
+    nextBtn.addEventListener("click", () => showImage(currentIndex + 1));
 
-        prevBtn?.addEventListener('click', () => this.prev());
-        nextBtn?.addEventListener('click', () => this.next());
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) closeLightbox();
+    });
 
-        indicators.forEach(indicator => {
-            indicator.addEventListener('click', (e) => {
-                const index = parseInt(e.target.dataset.index);
-                this.goToSlide(index);
-            });
-        });
+    document.addEventListener("keydown", (e) => {
+      if (!lightboxModal.classList.contains("active")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+      if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    });
+  }
 
-        // Keyboard navigation
-        this.container.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') this.prev();
-            if (e.key === 'ArrowRight') this.next();
-        });
-    }
+  function openLightbox(images, index) {
+    if (!lightboxModal) createLightbox();
+    currentImages = images;
+    currentIndex = index;
+    showImage(index);
+    lightboxModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
 
-    goToSlide(index) {
-        const slides = this.container.querySelectorAll('.carousel-slide');
-        const indicators = this.container.querySelectorAll('.carousel-indicator');
+  function closeLightbox() {
+    lightboxModal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
 
-        slides[this.currentIndex]?.classList.remove('active');
-        indicators[this.currentIndex]?.classList.remove('active');
+  function showImage(index) {
+    if (index < 0) index = currentImages.length - 1;
+    if (index >= currentImages.length) index = 0;
+    currentIndex = index;
 
-        this.currentIndex = (index + this.images.length) % this.images.length;
+    const img = lightboxModal.querySelector(".lightbox-content img");
+    const imageData = currentImages[index];
 
-        slides[this.currentIndex]?.classList.add('active');
-        indicators[this.currentIndex]?.classList.add('active');
-    }
+    img.src = imageData.src;
+    img.alt = imageData.alt;
 
-    next() {
-        this.goToSlide(this.currentIndex + 1);
-    }
+    const prevBtn = lightboxModal.querySelector(".prev");
+    const nextBtn = lightboxModal.querySelector(".next");
+    prevBtn.style.display = currentImages.length > 1 ? "flex" : "none";
+    nextBtn.style.display = currentImages.length > 1 ? "flex" : "none";
+  }
 
-    prev() {
-        this.goToSlide(this.currentIndex - 1);
-    }
+  // Unified function to render image gallery with optional labels
+  function renderImageGallery(images, title, parentContainer) {
+    const grid = document.createElement("div");
+    grid.className = "gallery-grid";
+    grid.setAttribute("role", "list");
+    grid.setAttribute("aria-label", `${title} gallery`);
 
-    startAutoPlay() {
-        this.autoPlayTimer = setInterval(() => this.next(), this.options.autoPlayInterval);
-    }
+    images.forEach((imageData, index) => {
+      const item = document.createElement("figure");
+      item.className = "gallery-item";
+      item.setAttribute("role", "listitem");
+      item.style.cursor = "pointer";
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", `View ${imageData.alt}`);
 
-    stopAutoPlay() {
-        if (this.autoPlayTimer) {
-            clearInterval(this.autoPlayTimer);
+      const img = document.createElement("img");
+      img.src = imageData.src;
+      img.alt = imageData.alt;
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      item.appendChild(img);
+
+      // Add label if present
+      if (imageData.label) {
+        const label = document.createElement("span");
+        label.className = "image-label";
+        label.textContent = imageData.label;
+        item.appendChild(label);
+      }
+
+      item.addEventListener("click", () => openLightbox(images, index));
+      item.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLightbox(images, index);
         }
-    }
+      });
+      grid.appendChild(item);
+    });
 
-    destroy() {
-        this.stopAutoPlay();
-        this.container.innerHTML = '';
-    }
-}
+    parentContainer.appendChild(grid);
+  }
 
-function createBeforeAfterItem(data, basePath) {
-    const item = document.createElement('div');
-    item.className = 'before-after-item';
+  function initPortfolio() {
+    if (typeof portfolioSets === "undefined" || !Array.isArray(portfolioSets)) return;
 
-    const title = document.createElement('h4');
-    title.textContent = data.title;
-    item.appendChild(title);
+    const mapping = {
+      "Tiny House": "tiny-house-container",
+      "Exterior House Painting": "exterior-house-painting-container",
+      "Porch Restoration": "porch-restoration-container",
+      "Stairs": "stairs-container",
+    };
 
-    // Combined carousel containing both before and after slides with labels
-    const carouselContainer = document.createElement('div');
-    carouselContainer.className = 'carousel';
-    item.appendChild(carouselContainer);
+    portfolioSets.forEach((set) => {
+      const containerId = mapping[set.title] || `${set.dir}-container`;
+      const container = document.getElementById(containerId);
+      if (!container) return;
 
-    const combined = [];
-    if (Array.isArray(data.before)) {
-        data.before.forEach(img => combined.push({ src: `${basePath}${data.dir}/${img}`, label: 'Before' }));
-    }
-    if (Array.isArray(data.after)) {
-        data.after.forEach(img => combined.push({ src: `${basePath}${data.dir}/${img}`, label: 'After' }));
-    }
-    if (Array.isArray(data.images)) {
-        data.images.map(img => combined.push({ src: `${basePath}${data.dir}/${img}` }));
-    }
-    new Carousel(carouselContainer, combined);
+      const images = [];
 
-    return item;
-}
+      // combine before, after, and regular images into one array
+      if (Array.isArray(set.before)) {
+        set.before.forEach((filename) =>
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "Before",
+          }),
+        );
+      }
 
-function initPortfolio() {
-    if (typeof portfolioSets === 'undefined' || !Array.isArray(portfolioSets)) {
-        return;
-    }
+      if (Array.isArray(set.after)) {
+        set.after.forEach((filename) =>
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "After",
+          }),
+        );
+      }
 
-    const basePath = 'assets/images/';
-    const beforeAfterSets = portfolioSets;
+      if (Array.isArray(set.images)) {
+        set.images.forEach((filename) =>
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: null,
+          }),
+        );
+      }
 
-    const beforeAfterContainer = document.getElementById('before-after-container');
-    if (beforeAfterContainer && beforeAfterSets) {
-        beforeAfterSets.forEach(set => {
-            const item = createBeforeAfterItem(set, basePath);
-            beforeAfterContainer.appendChild(item);
-        });
-    }
-}
+      container.innerHTML = "";
+      renderImageGallery(images, set.title, container);
+    });
+  }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPortfolio);
-} else {
+  // Initialize art gallery
+  function initGallery() {
+    if (typeof artSets === "undefined" || !Array.isArray(artSets)) return;
+
+    const mapping = {
+      "Chalk Art": "chalk-art-container",
+      "Tree Mural": "tree-mural-container",
+      "Wall Art": "wall-art-container",
+      "Stage Sets": "stage-sets-container",
+    };
+
+    artSets.forEach((set) => {
+      const containerId = mapping[set.title] || `${set.dir}-container`;
+      const container = document.getElementById(containerId);
+      if (!container || !Array.isArray(set.images)) return;
+
+      const images = set.images.map((filename) => ({
+        src: `assets/images/${set.dir}/${filename}`,
+        alt: createAltText(filename, set.title),
+        label: null,
+      }));
+
+      container.innerHTML = "";
+      renderImageGallery(images, set.title, container);
+    });
+  }
+
+  // init after DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      initGallery();
+      initPortfolio();
+    });
+  } else {
+    initGallery();
     initPortfolio();
-}
+  }
+})();
