@@ -480,23 +480,14 @@ p {
 }
 
 .service-card ul {
-    list-style: none;
-    padding: 2px;
+    list-style: disc;
+    list-style-position: inside;
+    padding: 0 2px;
     margin-top: var(--space-md);
 }
 
 .service-card ul li {
     padding: var(--space-xs) 0;
-    padding-left: var(--space-md);
-    position: relative;
-}
-
-.service-card ul li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: var(--color-primary);
-    font-weight: bold;
 }
 
 /* -----------------------------------------
@@ -843,10 +834,17 @@ p {
 
 .footer-links ul {
     list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-left: 0;
+    margin: 0;
+    align-items: center;
 }
 
 .footer-links ul li {
-    margin-bottom: var(--space-xs);
+    margin-bottom: 0;
+    margin-right: 0;
 }
 
 .footer-links a {
@@ -1017,7 +1015,6 @@ p {
     }
 }
 
-/* Focus styles for keyboard navigation */
 a:focus,
 button:focus,
 input:focus,
