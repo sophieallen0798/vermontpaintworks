@@ -387,6 +387,40 @@ p {
 }
 
 /* -----------------------------------------
+   Feature Cards (Why Choose Us / We Offer)
+   ----------------------------------------- */
+.features .features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: center;
+}
+
+.feature-card {
+    background: var(--color-bg-white);
+    border-radius: calc(var(--radius) + 2px);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-lg);
+    width: 100%;
+    max-width: 560px;
+    transition: box-shadow var(--transition);
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.feature-card p {
+    text-align: justify;
+    margin: 0;
+}
+
+.feature-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+}
+
+/* -----------------------------------------
    Content Grid (About Page)
    ----------------------------------------- */
 .content-grid {
@@ -452,6 +486,11 @@ p {
 /* -----------------------------------------
    Services Grid
    ----------------------------------------- */
+
+.services-into {
+    padding: var(--space-sm);
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -869,7 +908,7 @@ p {
 .footer-bottom {
     text-align: center;
     padding: var(--space-xs) 0;
-    border-top: 1px solid rgba(0,0,0,0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .footer-bottom p {
@@ -900,7 +939,7 @@ p {
         padding: 0 var(--space-md);
     }
 
-    
+
     .nav-desktop-color {
         color: var(--color-bg) !important;
     }
@@ -1016,6 +1055,18 @@ p {
         max-width: 260px;
         padding: 0.4rem 0.65rem;
         font-size: 0.95rem;
+    }
+
+    .features .features-grid {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .feature-card {
+        margin: 0 var(--space-md);
+        flex: 1 1 0;
+        max-width: 480px;
     }
 }
 
