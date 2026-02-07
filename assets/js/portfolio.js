@@ -143,7 +143,9 @@
     portfolioSets.forEach((set) => {
       const containerId = mapping[set.title] || `${set.dir}-container`;
       const container = document.getElementById(containerId);
-      if (!container) return;
+      // optional slideshow slot (preferred) - falls back to gallery container
+      const slideshowSlot = document.getElementById(`${set.dir}-slideshow`);
+      if (!container && !slideshowSlot) return;
 
       const images = [];
 
@@ -178,9 +180,124 @@
         );
       }
 
-      container.innerHTML = "";
-      renderImageGallery(images, set.title, container);
+      if (container) container.innerHTML = "";
+
+      // Create a slideshow for this set (if images exist)
+      if (images.length > 0) {
+        createSlideshow(images, set.title, slideshowSlot || container, set.dir);
+      }
+
+      // Then render the gallery grid (thumbnail lightbox) into the gallery container
+      if (container) renderImageGallery(images, set.title, container);
     });
+  }
+
+  // Create a self-contained slideshow for a set and append it to the parent container
+  function createSlideshow(images, title, parentContainer, uid) {
+    const slideshowWrapper = document.createElement('div');
+    slideshowWrapper.className = 'slideshow-wrapper';
+
+    const slideshowId = `slideshow-${uid}`;
+
+    const container = document.createElement('div');
+    container.className = 'slideshow-container';
+    container.id = slideshowId;
+
+    images.forEach((imgData, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'mySlides fade';
+
+      const numberText = document.createElement('div');
+      numberText.className = 'numbertext';
+      numberText.textContent = `${i + 1} / ${images.length}`;
+
+      const img = document.createElement('img');
+      img.src = imgData.src;
+      img.alt = imgData.alt;
+      img.style.width = '100%';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      const caption = document.createElement('div');
+      caption.className = 'text';
+      caption.textContent = title;
+
+      // Open lightbox on click (image or entire slide)
+      img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(images, i); });
+      slide.style.cursor = 'pointer';
+      slide.addEventListener('click', () => openLightbox(images, i));
+
+      slide.appendChild(numberText);
+      slide.appendChild(img);
+      slide.appendChild(caption);
+      container.appendChild(slide);
+    });
+
+    const prev = document.createElement('a');
+    prev.className = 'prev';
+    prev.href = 'javascript:void(0)';
+    prev.setAttribute('aria-label', `${title} previous`);
+    prev.innerHTML = '&#10094;';
+
+    const next = document.createElement('a');
+    next.className = 'next';
+    next.href = 'javascript:void(0)';
+    next.setAttribute('aria-label', `${title} next`);
+    next.innerHTML = '&#10095;';
+
+    container.appendChild(prev);
+    container.appendChild(next);
+
+    // Dots
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'slideshow-dots';
+    dotsWrap.style.textAlign = 'center';
+
+    const dots = [];
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('tabindex', '0');
+      dot.addEventListener('click', (e) => { e.stopPropagation(); showSlide(i + 1); });
+      dot.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); showSlide(i + 1); } });
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    });
+
+    slideshowWrapper.appendChild(container);
+    slideshowWrapper.appendChild(dotsWrap);
+
+    parentContainer.appendChild(slideshowWrapper);
+
+    // slideshow state and controls (closure per slideshow)
+    let slideIndex = 1;
+
+    function showSlide(n) {
+      if (n > images.length) slideIndex = 1;
+      else if (n < 1) slideIndex = images.length;
+      else slideIndex = n;
+
+      const slides = container.getElementsByClassName('mySlides');
+      for (let i = 0; i < slides.length; i++) slides[i].style.display = 'none';
+      for (let i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(' active', '');
+      slides[slideIndex - 1].style.display = 'block';
+      dots[slideIndex - 1].className += ' active';
+    }
+
+    function plusSlides(n) { showSlide(slideIndex + n); }
+
+    prev.addEventListener('click', (e) => { e.stopPropagation(); plusSlides(-1); });
+    next.addEventListener('click', (e) => { e.stopPropagation(); plusSlides(1); });
+
+    // keyboard nav for slideshow
+    container.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') plusSlides(-1);
+      if (e.key === 'ArrowRight') plusSlides(1);
+    });
+
+    // initialize
+    showSlide(slideIndex);
   }
 
   // Initialize art gallery
@@ -197,7 +314,8 @@
     artSets.forEach((set) => {
       const containerId = mapping[set.title] || `${set.dir}-container`;
       const container = document.getElementById(containerId);
-      if (!container || !Array.isArray(set.images)) return;
+      const slideshowSlot = document.getElementById(`${set.dir}-slideshow`);
+      if ((!container && !slideshowSlot) || !Array.isArray(set.images)) return;
 
       const images = set.images.map((filename) => ({
         src: `assets/images/${set.dir}/${filename}`,
@@ -205,8 +323,9 @@
         label: null,
       }));
 
-      container.innerHTML = "";
-      renderImageGallery(images, set.title, container);
+      if (container) container.innerHTML = "";
+      if (images.length > 0) createSlideshow(images, set.title, slideshowSlot || container, set.dir);
+      if (container) renderImageGallery(images, set.title, container);
     });
   }
 
