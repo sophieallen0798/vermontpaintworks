@@ -94,25 +94,21 @@
                         <div id="stairs-slideshow" class="slideshow-slot"></div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Artwork Tab Content -->
-            <div id="artwork-tab" class="tab-content">
-                <div class="gallery-category" id="livingroom-mural">
-                    <h2>Livingroom Mural</h2>
-                    <div id="tree-mural-container" class="gallery-container"></div>
-                </div>
-                <div class="gallery-category" id="chalk-art">
-                    <h2>Chalk Art</h2>
-                    <div id="chalk-art-container" class="gallery-container"></div>
-                </div>
-                <div class="gallery-category" id="wall-art">
-                    <h2>Wall Art</h2>
-                    <div id="wall-art-container" class="gallery-container"></div>
-                </div>
-                <div class="gallery-category" id="stage-sets">
-                    <h2>Stage Sets</h2>
-                    <div id="stage-sets-container" class="gallery-container"></div>
+                <!-- Artwork Tab Content -->
+                <div id="artwork-tab" class="tab-content">
+                    <div class="gallery-category" id="livingroom-mural">
+                        <div id="tree-mural-container" class="slideshow-slot"></div>
+                    </div>
+                    <div class="gallery-category" id="chalk-art">
+                        <div id="chalk-art-container" class="slideshow-slot"></div>
+                    </div>
+                    <div class="gallery-category" id="wall-art">
+                        <div id="wall-art-container" class="slideshow-slot"></div>
+                    </div>
+                    <div class="gallery-category" id="stage-sets">
+                        <div id="stage-sets-container" class="slideshow-slot"></div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -213,8 +209,7 @@
                 title: 'Chalk Art',
                 dir: 'street-art',
                 images: [
-                    '20180525_212156.jpg',
-                    '20180608_213611 (1).jpg',
+                    'chalk-snakes.jpg',
                     'chalk-art-crane.JPG',
                     'chalk-crane.jpg',
                     'chalk-door.JPG',
@@ -272,19 +267,36 @@
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
 
+            function activateTab(target) {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    content.setAttribute('aria-hidden', 'true');
+                    content.style.display = 'none';
+                });
+
+                const btn = Array.from(tabButtons).find(b => b.getAttribute('data-tab') === target);
+                if (btn) btn.classList.add('active');
+
+                const el = document.getElementById(target + '-tab');
+                if (el) {
+                    el.classList.add('active');
+                    el.setAttribute('aria-hidden', 'false');
+                    // Clear inline display so CSS `display: grid` can apply,
+                    // or set explicitly to 'grid' to ensure layout.
+                    el.style.display = '';
+                }
+            }
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function () {
-                    const targetTab = this.getAttribute('data-tab');
-
-                    // Remove active class from all buttons and contents
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Add active class to clicked button and corresponding content
-                    this.classList.add('active');
-                    document.getElementById(targetTab + '-tab').classList.add('active');
+                    activateTab(this.getAttribute('data-tab'));
                 });
             });
+
+            // Ensure initial tab state reflects markup
+            const initial = document.querySelector('.tab-button.active');
+            if (initial) activateTab(initial.getAttribute('data-tab'));
         });
     </script>
 </body>
