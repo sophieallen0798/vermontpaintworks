@@ -31,8 +31,10 @@
 
     <link rel="preload" href="assets/images/logo.svg" as="image" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/images/logo.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
     <link rel="mask-icon" href="assets/images/logo.svg" color="#1a5438">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://www.vermontpaintworks.com/portfolio.html">
@@ -80,7 +82,9 @@
 
                 <!-- Projects Tab Content -->
                 <div id="projects-tab" class="tab-content active">
-
+                    <div class="gallery-category" id="church-sanctuary-painting">
+                        <div id="church-slideshow" class="slideshow-slot"></div>
+                    </div>
                     <div class="gallery-category" id="exterior-house-painting">
                         <div id="colorful-house-slideshow" class="slideshow-slot"></div>
                     </div>
@@ -146,6 +150,30 @@
         // Portfolio data configuration
         portfolioSets = [
             {
+                title: 'Church Sanctuary Painting',
+                dir: 'church',
+                images: [
+                                        'Hedding Methodist 006.jpg',
+                    'Hedding Methodist 001.jpg',
+                    'Hedding Methodist 002.jpg',
+                    'Hedding Methodist 003.jpg',
+                    'Hedding Methodist 004.jpg',
+                    'Hedding Methodist 005.jpg',
+                    'Hedding Methodist 007.jpg',
+                    'Hedding Methodist 008.jpg',
+                    'Hedding Methodist 009.jpg',
+                    'Hedding Methodist 010.jpg',
+                    'Hedding Methodist 011.jpg',
+                    'Hedding Methodist 012.jpg',
+                    'Hedding Methodist 013.jpg',
+                    'Hedding Methodist 014.jpg',
+                    'Hedding Methodist 015.jpg',
+                    'Hedding Methodist 016.jpg',
+                    'Hedding Methodist 017.jpg',
+                    'Hedding Methodist 018.jpg',
+                ]
+            }, 
+            {
                 title: 'Exterior House Painting',
                 dir: 'colorful-house',
                 before: [
@@ -154,8 +182,8 @@
                     'colorful-round-before.jpg',
                 ],
                 after: [
-                    'colorful-full-after.jpg',
                     'colorful-after-front.jpg',
+                    'colorful-full-after.jpg',
                     'colorful-after-angle.jpg',
                     'colorful-after-curve.jpg',
                     'colorful-after-side.jpg',
@@ -228,10 +256,10 @@
                 title: 'Tree Mural',
                 dir: 'tree-mural',
                 images: [
-                    'full-tree-2.jpg',
-                    'bare-tree.jpg',
-                    'owl-in-tree.jpg',
-                    'squirrel.jpg',
+                    'full-tree-barre.JPG',
+                    'barre-tree.JPG',
+                    'owl-in-tree.JPG',
+                    'squirrel.JPG',
                     'tree-trunk.jpg'
                 ]
             },
@@ -239,8 +267,8 @@
                 title: 'Wall Art',
                 dir: 'wall-art',
                 images: [
-                    'elephant-painting.jpg',
-                    'bird-painting.jpg',
+                    'elephant-painting.JPG',
+                    'bird-painting.JPG',
                     'night-sky.jpg'
                 ]
             },

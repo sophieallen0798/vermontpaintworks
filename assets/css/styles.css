@@ -14,6 +14,7 @@
     --color-text: #361a15;
     --color-text-light: #64748b;
     --color-bg: #f6f3f0;
+    --color-bg-rgb: 246, 243, 240;
     --color-bg-white: #fff;
     --color-bg-light: #f8fafc;
     --color-bg-dark: #f1f5f9;
@@ -580,21 +581,7 @@ p {
     box-shadow: var(--shadow-md);
 }
 
-/* -----------------------------------------
-   Gallery Category
-   ----------------------------------------- */
-.gallery-category {
-    scroll-margin-top: calc(var(--header-height) + var(--space-md));
-}
 
-.gallery-category h2 {
-    text-align: center;
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-sm);
-    color: var(--color-primary);
-    font-size: 2rem;
-    font-weight: 700;
-}
 
 /* -----------------------------------------
    Tab Navigation
@@ -963,16 +950,17 @@ Slideshow Containers
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Caption text */
-.text {
-    color: #f2f2f2;
+/* Portfolio text */
+.slide-text {
+    color: var(--color-text);
     font-size: 15px;
-    padding: 8px 12px;
+    padding: 1px 10px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
     position: absolute;
     bottom: 8px;
-    width: 100%;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--color-bg-rgb), 0.7);
 }
 
 /* Number text (1/3 etc) */
@@ -987,8 +975,8 @@ Slideshow Containers
 /* The dots/bullets/indicators */
 .dot {
     cursor: pointer;
-    height: 15px;
-    width: 15px;
+    height: 10px;
+    width: 10px;
     margin: 0 2px;
     background-color: #bbb;
     border-radius: 50%;
@@ -996,8 +984,14 @@ Slideshow Containers
     transition: background-color 0.6s ease;
 }
 
-.dot:hover {
-    background-color: transparent;
+/* active dot: dot element itself has the `active` class */
+.dot.active {
+    background-color: var(--color-accent);
+    /* change to any variable or hex you prefer */
+}
+
+.dot.active:hover {
+    background-color: var(--color-accent);
 }
 
 /* Fading animation */
@@ -1035,10 +1029,21 @@ Slideshow Containers
 }
 
 .gallery-category {
-    background: var(--color-bg-white);
+
     padding: var(--space-sm);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    /* box-shadow: var(--shadow-sm); */
+    scroll-margin-top: calc(var(--header-height) + var(--space-md));
+    background-color: transparent;
+}
+
+.gallery-category h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-sm);
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .slideshow-slot {
@@ -1056,18 +1061,17 @@ Slideshow Containers
     align-items: center;
     max-width: 100%;
     overflow: hidden;
-    border-radius: 6px;
     aspect-ratio: 4 / 5;
 }
 
 .slideshow-slot img {
- max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 /* adjust prev/next size for compact slides */
@@ -1145,7 +1149,7 @@ Slideshow Containers
 
     /* Multi-column layouts */
     .gallery-grid {
-        column-count: 3;
+        column-count: 2;
         column-gap: var(--space-md);
     }
 
@@ -1229,10 +1233,10 @@ Slideshow Containers
         max-width: 480px;
     }
 
-    /* three columns on large screens */
+    /* two columns on large screens */
     #projects-tab,
     #artwork-tab {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         align-items: start;
     }
 

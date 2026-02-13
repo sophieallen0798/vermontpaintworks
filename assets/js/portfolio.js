@@ -161,7 +161,6 @@
       }
 
       if (container) container.innerHTML = '';
-
       if (images.length > 0) createSlideshow(images, set.title, slideshowSlot || container, set.dir);
 
       if (container && !container.classList.contains('slideshow-slot')) renderImageGallery(images, set.title, container);
@@ -170,10 +169,11 @@
 
   function initPortfolio(sets) {
     const mapping = {
+      'Church Sanctuary Painting': 'church-painting-container',
       'Tiny House': 'tiny-house-container',
       'Exterior House Painting': 'exterior-house-painting-container',
       'Porch Restoration': 'porch-restoration-container',
-      Stairs: 'stairs-container',
+      'Stairs': 'stairs-container',
     };
     initSets(sets, mapping);
   }
@@ -205,8 +205,8 @@
       img.decoding = "async";
 
       const caption = document.createElement("div");
-      caption.className = "text";
-      caption.textContent = title;
+      caption.className = "slide-text";
+      caption.textContent = imgData.label ? `${title} - ${imgData.label}` : title;
 
       // Open lightbox on click (image or entire slide)
       img.addEventListener("click", (e) => {
