@@ -136,7 +136,6 @@ p {
    ----------------------------------------- */
 .site-header {
     background-color: var(--color-bg);
-    box-shadow: var(--shadow-sm);
     position: static;
     left: 0;
     right: 0;
@@ -377,12 +376,7 @@ p {
 .content-section,
 .services-section,
 .contact-section {
-    padding: var(--space-2xl) 0;
-}
-
-.contact-section .container {
-    padding: var(--space-md);
-    align-items: center;
+    padding: var(--space-xl) var(--space-2xl);
 }
 
 .features h2,
@@ -497,7 +491,7 @@ p {
    ----------------------------------------- */
 
 .services-into {
-    padding: var(--space-sm);
+    padding: 0 var(--space-sm);
 }
 
 .services-grid {
