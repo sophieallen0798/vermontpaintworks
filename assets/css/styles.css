@@ -376,7 +376,7 @@ p {
 .content-section,
 .services-section,
 .contact-section {
-    padding: var(--space-xl) var(--space-2xl);
+    padding: var(--space-xl) var(--space-xs);
 }
 
 .features h2,
@@ -423,6 +423,7 @@ p {
 .feature-card ul {
     padding-left: 20px;
 }
+
 /* -----------------------------------------
    Content Grid (About Page)
    ----------------------------------------- */
@@ -1195,6 +1196,13 @@ Slideshow Containers
 
     .lightbox-nav.next {
         right: 20px;
+    }
+
+    .features,
+    .content-section,
+    .services-section,
+    .contact-section {
+        padding: var(--space-xl) var(--space-2xl);
     }
 
     .footer-content {
