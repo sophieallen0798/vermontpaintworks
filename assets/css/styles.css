@@ -380,6 +380,11 @@ p {
     padding: var(--space-2xl) 0;
 }
 
+.contact-section .container {
+    padding: var(--space-md);
+    align-items: center;
+}
+
 .features h2,
 .content-section h2,
 .services-section h2 {
@@ -421,6 +426,9 @@ p {
     margin-bottom: var(--space-sm);
 }
 
+.feature-card ul {
+    padding-left: 20px;
+}
 /* -----------------------------------------
    Content Grid (About Page)
    ----------------------------------------- */
@@ -712,18 +720,14 @@ p {
     right: 10px;
 }
 
-/* -----------------------------------------
-   Contact Section
-   ----------------------------------------- */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-}
-
 .contact-info h2,
 .contact-form-wrapper h2 {
     margin-bottom: var(--space-md);
+}
+
+.contact-form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .contact-details {
@@ -732,6 +736,16 @@ p {
 
 .contact-item {
     margin-bottom: var(--space-lg);
+    background-color: var(--color-bg-white);
+    padding: var(--space-sm);
+    border-radius: 8px;
+    max-width: 400px;
+    box-shadow: var(--shadow-md);
+}
+
+.contact-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
 }
 
 .contact-item h3 {
@@ -757,9 +771,10 @@ p {
    Forms
    ----------------------------------------- */
 .contact-form {
-    background-color: var(--color-bg-light);
+    background-color: var(--color-bg-white);
     padding: var(--space-lg);
     border-radius: 8px;
+    box-shadow: var(--shadow-md);
 }
 
 .form-group {

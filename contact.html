@@ -69,87 +69,47 @@
         <section class="page-header">
             <div class="container">
                 <h1>Contact Us</h1>
-                <p>Get in touch for a free consultation and quote</p>
+                <p>Get in touch for a free consultation</p>
             </div>
         </section>
 
         <section class="contact-section">
             <div class="container">
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <h2>Get in Touch</h2>
-                        <p>Ready to start your painting project? Contact us today for a free, no-obligation consultation
-                            and quote.</p>
-                        <div class="section-media">
-                            <img class="section-image" src="assets/images/colorful-house/colorful-after-side.jpg"
-                                alt="Freshly painted Vermont home" width="1200" height="800" loading="lazy"
-                                decoding="async">
-                        </div>
-
-                        <div class="contact-details">
-                            <!-- <div class="contact-item">
-                                <h3>Phone</h3>
-                                <p><a href="tel:+18025055748">(802) 505-5748</a></p>
-                            </div> -->
-
-                            <div class="contact-item">
-                                <h3>Email</h3>
-                                <p><a href="mailto:info@vermontpaintworks.com">info@vermontpaintworks.com</a></p>
-                            </div>
-
-                            <div class="contact-item">
-                                <h3>Service Area</h3>
-                                <p>Serving central Vermont</p>
-                            </div>
-                        </div>
+                <div class="contact-form-wrapper">
+                    <h2>Get in Touch</h2>
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@vermontpaintworks.com">info@vermontpaintworks.com</a></p>
                     </div>
-
-                    <div class="contact-form-wrapper">
-                        <h2>Request a Quote</h2>
-                        <form class="contact-form" action="https://formsubmit.co/info@vermontpaintworks.com"
-                            method="POST" novalidate>
-                            <!-- <input type="hidden" name="_subject" value="Website Contact: New message">
+                    <form class="contact-form" action="https://formsubmit.co/info@vermontpaintworks.com" method="POST"
+                        novalidate>
+                        <!-- <input type="hidden" name="_subject" value="Website Contact: New message">
                         <input type="hidden" name="_captcha" value="false"> -->
-                            <p class="form-hint" id="required-note">Fields marked with * are required.</p>
-                            <div class="form-group">
-                                <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" autocomplete="name" minlength="2" required>
-                            </div>
+                        <p class="form-hint" id="required-note">Fields marked with * are required.</p>
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" autocomplete="name" minlength="2" required>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" autocomplete="email" required>
-                            </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel"
-                                    pattern="^\+?[0-9\s().-]{7,}$" aria-describedby="phone-hint">
-                            </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel"
+                                pattern="^\+?[0-9\s().-]{7,}$" aria-describedby="phone-hint">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="service">Service Type</label>
-                                <select id="service" name="service">
-                                    <option value="">Select a service...</option>
-                                    <option value="interior">Interior Painting</option>
-                                    <option value="exterior">Exterior Painting</option>
-                                    <option value="commercial">Commercial Painting</option>
-                                    <option value="specialty">Specialty Services</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="message">Your Message *</label>
+                            <textarea id="message" name="message" rows="6" minlength="10" required
+                                aria-describedby="message-hint"></textarea>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="message">Your Message *</label>
-                                <textarea id="message" name="message" rows="6" minlength="10" required
-                                    aria-describedby="message-hint"></textarea>
-                                <p class="form-hint" id="message-hint">Include scope, timeline, and any specific
-                                    requirements.</p>
-                            </div>
-
-                            <button type="submit" class="submit-button">Send Message</button>
-                        </form>
-                    </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
                 </div>
             </div>
         </section>
