@@ -411,7 +411,7 @@ p {
 }
 
 .feature-card p {
-    text-align: justify;
+    text-align: left;
     margin: 0;
 }
 
@@ -430,7 +430,7 @@ p {
 .content-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
 }
 
 .content-media {
@@ -479,6 +479,12 @@ p {
     transition: transform 160ms ease;
 }
 
+.about-divider {
+    border: none;
+    border-top: 1px solid var(--color-text-light);
+    margin: var(--space-xl) 0;
+}
+
 .about-figure:hover .about-caption {
     transform: translateY(-2px);
 }
@@ -493,6 +499,7 @@ p {
 
 .services-into {
     padding: 0 var(--space-sm);
+    padding-bottom: var(--space-md);
 }
 
 .services-grid {
@@ -1240,15 +1247,11 @@ Slideshow Containers
 
     .features .features-grid {
         flex-direction: row;
-        justify-content: center;
+        justify-content: left;
         align-items: flex-start;
     }
 
-    .feature-card {
-        margin: 0 var(--space-md);
-        flex: 1 1 0;
-        max-width: 480px;
-    }
+
 
     /* two columns on large screens */
     #projects-tab,
