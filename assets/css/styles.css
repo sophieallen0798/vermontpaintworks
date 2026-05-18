@@ -251,7 +251,7 @@ p {
    ----------------------------------------- */
 .hero {
     position: relative;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/hero.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/church/Hedding Methodist 002.jpg");
     margin: 0;
     /* Remove default body margin */
     padding-top: var(--header-height);
