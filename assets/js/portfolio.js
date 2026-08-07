@@ -135,45 +135,59 @@
     if (!Array.isArray(sets)) return;
 
     sets.forEach((set) => {
-      const containerId = (mapping && mapping[set.title]) || `${set.dir}-container`;
+      const containerId =
+        (mapping && mapping[set.title]) || `${set.dir}-container`;
       const container = document.getElementById(containerId);
       const slideshowSlot = document.getElementById(`${set.dir}-slideshow`);
       if (!container && !slideshowSlot) return;
 
       const images = [];
 
-      if (Array.isArray(set.before)) {
-        set.before.forEach((filename) =>
-          images.push({ src: `assets/images/${set.dir}/${filename}`, alt: createAltText(filename, set.title), label: 'Before' }),
-        );
-      }
-
       if (Array.isArray(set.after)) {
         set.after.forEach((filename) =>
-          images.push({ src: `assets/images/${set.dir}/${filename}`, alt: createAltText(filename, set.title), label: 'After' }),
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "After",
+          }),
+        );
+      }
+      if (Array.isArray(set.before)) {
+        set.before.forEach((filename) =>
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: "Before",
+          }),
         );
       }
 
       if (Array.isArray(set.images)) {
         set.images.forEach((filename) =>
-          images.push({ src: `assets/images/${set.dir}/${filename}`, alt: createAltText(filename, set.title), label: null }),
+          images.push({
+            src: `assets/images/${set.dir}/${filename}`,
+            alt: createAltText(filename, set.title),
+            label: null,
+          }),
         );
       }
 
-      if (container) container.innerHTML = '';
-      if (images.length > 0) createSlideshow(images, set.title, slideshowSlot || container, set.dir);
+      if (container) container.innerHTML = "";
+      if (images.length > 0)
+        createSlideshow(images, set.title, slideshowSlot || container, set.dir);
 
-      if (container && !container.classList.contains('slideshow-slot')) renderImageGallery(images, set.title, container);
+      if (container && !container.classList.contains("slideshow-slot"))
+        renderImageGallery(images, set.title, container);
     });
   }
 
   function initPortfolio(sets) {
     const mapping = {
-      'Church Sanctuary Painting': 'church-painting-container',
-      'Tiny House': 'tiny-house-container',
-      'Exterior House Painting': 'exterior-house-painting-container',
-      'Porch Restoration': 'porch-restoration-container',
-      'Stairs': 'stairs-container',
+      "Church Sanctuary Painting": "church-painting-container",
+      "Tiny House": "tiny-house-container",
+      "Exterior House Painting": "exterior-house-painting-container",
+      "Porch Restoration": "porch-restoration-container",
+      Stairs: "stairs-container",
     };
     initSets(sets, mapping);
   }
@@ -206,7 +220,9 @@
 
       const caption = document.createElement("div");
       caption.className = "slide-text";
-      caption.textContent = imgData.label ? `${title} - ${imgData.label}` : title;
+      caption.textContent = imgData.label
+        ? `${title} - ${imgData.label}`
+        : title;
 
       // Open lightbox on click (image or entire slide)
       img.addEventListener("click", (e) => {
@@ -307,15 +323,15 @@
   }
 
   // Initialize art gallery
-    function initGallery() {
-      const mapping = {
-        'Chalk Art': 'chalk-art-container',
-        'Tree Mural': 'tree-mural-container',
-        'Wall Art': 'wall-art-container',
-        'Stage Sets': 'stage-sets-container',
-      };
-      initSets(artSets, mapping);
-    }
+  function initGallery() {
+    const mapping = {
+      "Chalk Art": "chalk-art-container",
+      "Tree Mural": "tree-mural-container",
+      "Wall Art": "wall-art-container",
+      "Stage Sets": "stage-sets-container",
+    };
+    initSets(artSets, mapping);
+  }
 
   // init after DOM ready
   if (document.readyState === "loading") {
