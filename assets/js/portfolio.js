@@ -185,9 +185,10 @@
     const mapping = {
       "Church Sanctuary Painting": "church-painting-container",
       "Tiny House": "tiny-house-container",
+      "Complete House Build": "full-house-build-container",
       "Exterior House Painting": "exterior-house-painting-container",
       "Porch Restoration": "porch-restoration-container",
-      Stairs: "stairs-container",
+      "Stairs": "stairs-container",
     };
     initSets(sets, mapping);
   }

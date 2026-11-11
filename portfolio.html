@@ -60,12 +60,26 @@
                 </div>
 
                 <!-- Projects Tab Content -->
+                <!-- HOW TO ADD A NEW PHOTO SET:
+                // 1. Add an entry to the portfolioSets array (in the <script> block lower in this file):
+                //    { title: 'My Set Title', dir: 'my-folder', images: ['img1.jpg', 'img2.jpg'] }
+                //    - dir must match a folder under assets/images/
+                //    - use 'images' for a plain list, or 'after'/'before' for labeled before/after sets
+                // 2. Add a gallery-category div here with id="${dir}-slideshow", e.g.:
+                //    <div class="gallery-category" id="my-set">
+                //        <div id="my-folder-slideshow" class="slideshow-slot"></div>
+                //    </div>
+                // The JS matches ${set.dir}-slideshow, so the id above must match the dir exactly.
+                -->
                 <div id="projects-tab" class="tab-content active">
                     <div class="gallery-category" id="church-sanctuary-painting">
                         <div id="church-slideshow" class="slideshow-slot"></div>
                     </div>
                     <div class="gallery-category" id="exterior-house-painting">
                         <div id="colorful-house-slideshow" class="slideshow-slot"></div>
+                    </div>
+                    <div class="gallery-category" id="full-house-build">
+                        <div id="complete-house-slideshow" class="slideshow-slot"></div>
                     </div>
                     <div class="gallery-category" id="exterior-house-painting-2">
                         <div id="red-house-slideshow" class="slideshow-slot"></div>
@@ -134,6 +148,45 @@
                     'Hedding Methodist 016.jpg',
                     'Hedding Methodist 017.jpg',
                     'Hedding Methodist 018.jpg',
+                ]
+            },
+            {
+                title: 'Full House Build',
+                dir: 'complete-house',
+                images: [
+                    'ground-1.jpg',
+                    'concrete-1.jpg',
+                    'concrete-2.jpg',
+                    'concrete-3.jpg',
+                    'concrete-4.jpg',
+                    'concrete-5.jpg',
+                    'concrete-6.jpg',
+                    'concrete-7.jpg',
+                    'concrete-8.jpg',
+                    'concrete-9.jpg',
+                    'concrete-10.jpg',
+                    'concrete-11.jpg',
+                    'complete-house-1.jpg',
+                    'complete-house-2.jpg',
+                    'complete-house-3.jpg',
+                    'complete-house-4.jpg',
+                    'complete-house-5.jpg',
+                    'complete-house-6.jpg',
+                    'complete-house-7.jpg',
+                    'complete-house-8.jpg',
+                    'complete-house-9.jpg',
+                    'complete-house-10.jpg',
+                    'complete-house-11.jpg',
+                    'complete-house-12.jpg',
+                    'complete-house-13.jpg',
+                    'complete-house-14.jpg',
+                    'complete-house-15.jpg',
+                    'complete-house-16.jpg',
+                    'full-1.jpg',
+                    'full-2.jpg',
+                    'full-3.jpg',
+                    'full-4.jpg',
+                    'hank.jpg',
                 ]
             },
             {
